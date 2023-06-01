@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <link rel="stylesheet" type="text/css" href="@{/css/style.css}" />
+</head>
+
+<script>
+    var url = window.location.href;
+    var name = url.substring(url.lastIndexOf('/') + 1);
+
+    // Effectuer une requête GET à l'API avec la valeur récupérée
+    var apiUrl = "/cardView/" + name;
+    fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    // Utiliser les données de la réponse
+    var cardId = data.id;
+    var cardName = data.name;
+    var cardImageUrl = data.imageUrl;
+    var cardDescription = data.description;
+    var cardAttack = data.attack;
+    var cardDefense = data.defense;
+    var cardOwner = data.owner;
+
+    // Mettre à jour les éléments HTML avec les valeurs des données
+    document.getElementById("cardId").textContent = cardId;
+    document.getElementById("cardName").textContent = cardName;
+    document.getElementById("cardImage").setAttribute("src", cardImageUrl);
+    document.getElementById("cardDescription").textContent = cardDescription;
+    document.getElementById("cardAttack").textContent = cardAttack;
+    document.getElementById("cardDefense").textContent = cardDefense;
+    document.getElementById("cardOwner").textContent = cardOwner;
+  })
+  .catch(error => {
+    // Gérer les erreurs
+    console.error(error);
+  });
+</script>
+<body>
+<h2>Card Details</h2>
+<div>
+    <p><strong>Card ID:</strong> <span id="cardId"></span></p>
+    <p><strong>Card Name:</strong> <span id="cardName"></span></p>
+    <p><strong>Card Image:</strong> <img id="cardImage" src="" alt="Card Image"></p>
+    <p><strong>Description:</strong> <span id="cardDescription"></span></p>
+    <p><strong>Attack:</strong> <span id="cardAttack"></span></p>
+    <p><strong>Defense:</strong> <span id="cardDefense"></span></p>
+    <p><strong>Owner:</strong> <span id="cardOwner"></span></p>
+</div>
+
+</body>
+</html>

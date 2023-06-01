@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <!-- Site Properties -->
+    <title>Grid Example - Semantic</title>
+
+    <link rel="stylesheet" type="text/css" href="../lib/Semantic-UI-CSS-master/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+
+</head>
+
+<body>
+<h1>Formulaire</h1>
+<form>
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom" required><br><br>
+
+    <label for="description">Description :</label>
+    <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+
+    <label for="image-url">Image URL :</label>
+    <input type="text" id="image-url" name="image-url" required><br><br>
+
+    <label for="attaque">Attaque :</label>
+    <input type="number" id="attaque" name="attaque" required><br><br>
+
+    <label for="defense">Défense :</label>
+    <input type="number" id="defense" name="defense" required><br><br>
+
+    <button type="button" onclick="cancel()">Cancel</button>
+    <button type="submit">OK</button>
+</form>
+
+
+<script src="../lib/jquery-3.3.1.min.js"></script>
+<script src="../lib/Semantic-UI-CSS-master/semantic.js"></script>
+<script src="js/animation-custom.js"></script>
+<script src="js/cards.js"></script>
+
+</body>
+</html>
