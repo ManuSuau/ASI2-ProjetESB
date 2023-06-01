@@ -1,10 +1,12 @@
 version: '3'
 services:
   webui-service:
-    container_name: webui-service
     build:
-      context: ./springboot-ms-webui
+      context: ../springboot-ms-webui
       dockerfile: Dockerfile
+      args:
+        - DIR=./webui
+        - PORT=8080
     ports:
       - 8080:8080
     networks:
@@ -16,27 +18,31 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../nginx-conf/nginx.conf:/etc/nginx/nginx.conf:ro
     networks:
       - my-network
 
   auth-service:
-    container_name: auth-service
     build:
-      context: ./springboot-ms-auth
+      context: ../springboot-ms-auth
       dockerfile: Dockerfile
+      args:
+        - DIR=authentication
+        - PORT=8080
     ports:
       - 8081:8080
     networks:
       - my-network
     environment:
       - SPRING_DATASOURCE_URL=jdbc:h2:./data/auth-db
-  
+
   user-service:
-    container_name: user-service
     build:
-      context: ./springboot-ms-user
+      context: ../springboot-ms-user
       dockerfile: Dockerfile
+      args:
+        - DIR=user
+        - PORT=8080
     ports:
       - 8082:8080
     networks:
@@ -45,10 +51,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:h2:./data/user-db
 
   card-service:
-    container_name: card-service
     build:
-      context: ./springboot-ms-card
+      context: ../springboot-ms-card
       dockerfile: Dockerfile
+      args:
+        - DIR=card
+        - PORT=8080
     ports:
       - 8083:8080
     networks:
@@ -57,10 +65,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:h2:./data/card-db
 
   store-service:
-    container_name: store-service
     build:
-      context: ./springboot-ms-store
+      context: ../springboot-ms-store
       dockerfile: Dockerfile
+      args:
+        - DIR=store
+        - PORT=8080
     ports:
       - 8084:8080
     networks:
