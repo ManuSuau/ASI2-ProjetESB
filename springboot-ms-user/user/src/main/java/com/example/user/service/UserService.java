@@ -31,4 +31,9 @@ public class UserService {
     public Optional<User> getCardById(Integer id)  {
         return userRepository.findById(id);
     }
+
+    @Transactional
+    public User getUserByUsernameAndPassword(String u, String p )  {
+        return userRepository.findByUsernameAndPassword(u,p);
+    }
 }

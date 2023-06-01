@@ -2,6 +2,7 @@ package com.example.user.controller;
 
 import com.example.user.model.User;
 import com.example.user.service.UserService;
+import model.UserConnectedDTO;
 import model.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,4 +28,14 @@ public class UserController {
         return userService.getCardById(id);
     }
 
+    @GetMapping()
+    public UserConnectedDTO findByUsernameAndPassword(@RequestParam("username") String username, @RequestParam("password") String password){
+        User user = userService.getUserByUsernameAndPassword(username,password);
+        UserConnectedDTO dto = new UserConnectedDTO();
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setPassword(user.getPassword());
+        dto.setMoney(user.getMoney());
+        return dto;
+    }
 }
