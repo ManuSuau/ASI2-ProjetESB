@@ -43,6 +43,9 @@ public class CardService {
         return card;
     }
 
+    public CardDTO PutCard(CardDTO card) {
+        return mappeurCard(addCard(mappeurDTO(card)));
+    }
     @Transactional
     public List<CardDTO> getCardByOwner(Long owner)  {
         if(owner>=0){
@@ -66,6 +69,21 @@ public class CardService {
         dto.setOwner_id(c.getOwnerid().longValue());
 
         return dto;
+    }
+
+
+    public Card mappeurDTO(CardDTO c){
+        Card card = new Card();
+        card.setId(c.getId());
+        card.setName(c.getName());
+        card.setAttack(c.getAttack());
+        card.setDefense(c.getDefense());
+        card.setDescription(c.getDescription());
+        card.setPrix(c.getPrix());
+        card.setImageUrl(c.getImageUrl());
+        card.setOwnerid(Math.toIntExact(c.getOwner_id()));
+
+        return card;
     }
 
     public List<CardDTO> mappeurCards(Iterable<Card> card){

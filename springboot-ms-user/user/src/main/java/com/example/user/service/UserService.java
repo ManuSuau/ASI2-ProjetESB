@@ -2,6 +2,8 @@ package com.example.user.service;
 
 import com.example.user.model.User;
 import com.example.user.repository.UserRepository;
+import model.CardDTO;
+import model.UserConnectedDTO;
 import model.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,16 @@ public class UserService {
     }
 
 
+
+    public UserConnectedDTO PutUser(UserConnectedDTO u) {
+        User user = new User();
+        user.setId(user.getId());
+        user.setUsername(u.getUsername());
+        user.setPassword(u.getPassword());
+        user.setMoney(u.getMoney());
+        userRepository.save(user);
+        return u;
+    }
     @Transactional
     public Optional<User> getCardById(Integer id)  {
         return userRepository.findById(id);

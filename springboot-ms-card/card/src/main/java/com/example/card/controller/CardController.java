@@ -3,6 +3,7 @@ package com.example.card.controller;
 import com.example.card.model.Card;
 import com.example.card.service.CardService;
 import model.CardDTO;
+import model.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,11 @@ public class CardController {
     @GetMapping("/{id}")
     public Optional<Card> findById(@PathVariable("id") Integer id){
         return cardService.getCardById(id);
+    }
+
+    @PutMapping("/{id}")
+    public CardDTO ModifyById(@RequestBody CardDTO card){
+        return cardService.PutCard(card);
     }
 
     @GetMapping("/owner")

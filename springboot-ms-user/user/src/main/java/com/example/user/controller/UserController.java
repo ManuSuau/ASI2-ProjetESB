@@ -2,6 +2,7 @@ package com.example.user.controller;
 
 import com.example.user.model.User;
 import com.example.user.service.UserService;
+import model.CardDTO;
 import model.UserConnectedDTO;
 import model.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class UserController {
     @GetMapping("/{id}")
     public Optional<User> findById(@PathVariable("id") Integer id){
         return userService.getCardById(id);
+    }
+
+    @PutMapping("/{id}")
+    public UserConnectedDTO ModifyById(@RequestBody UserConnectedDTO user){
+        return userService.PutUser(user);
     }
 
     @GetMapping()

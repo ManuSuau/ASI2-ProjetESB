@@ -25,12 +25,12 @@ public class AuthentificationService {
         // Extraction des données de la réponse
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
-        UserConnectedDTO user = objectMapper.readValue(responseBody, UserConnectedDTO.class);
-        UserConnectedDTO userConnectedDTO = new UserConnectedDTO();
+        UserConnectedDTO userDTO = objectMapper.readValue(responseBody, UserConnectedDTO.class);
+        /* UserConnectedDTO userConnectedDTO = new UserConnectedDTO();
         userConnectedDTO.setId(user.getId());
         userConnectedDTO.setUsername(user.getUsername());
         userConnectedDTO.setPassword(user.getPassword());
-        userConnectedDTO.setMoney(user.getMoney());
-        return userConnectedDTO;
+        userConnectedDTO.setMoney(user.getMoney()); */
+        return userDTO;
     }
 }
