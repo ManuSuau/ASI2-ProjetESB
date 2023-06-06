@@ -18,7 +18,7 @@ public class AuthentificationService {
 
     public UserConnectedDTO testConnexion(String username, String password) throws IOException {
         //UserConnectedDTO user = userRepository.findByUsernameAndPassword(username, password);
-        String apiUrl = "http://localhost:80/user/";
+        String apiUrl = "http://localhost:8000/user/";
         RestTemplate restTemplate = new RestTemplate();
         // Envoi de la requête GET et récupération de la réponse
         ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.GET, null, String.class);

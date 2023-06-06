@@ -18,7 +18,7 @@ form.addEventListener("submit", function(event) {
     password: pwdValue
   };
 
-  fetch("/auths", {
+  fetch("localhost:8000/auths", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

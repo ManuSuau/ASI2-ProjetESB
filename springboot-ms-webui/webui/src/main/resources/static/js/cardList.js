@@ -30,7 +30,7 @@ console.error(error);
 
 document.addEventListener('DOMContentLoaded', function() {
     var cardList = [];
-  var apiUrl = "/cards";
+  var apiUrl = "localhost:8000/cards";
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {

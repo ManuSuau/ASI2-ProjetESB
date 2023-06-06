@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     moneyId.textContent = "No Money"; // Message alternatif si le username n'est pas présent
   }
   var cardList = [];
-  var apiUrl = "/cards/owner?owner_id="+owner_id;
+  var apiUrl = "localhost:8000/cards/owner?owner_id="+owner_id;
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Fonction pour effectuer la vente de la carte
 function venteCarte(i) {
     const cardId = parseInt(i);
-    var apiUrl = "/store/sell";
+    var apiUrl = "localhost:8000/store/sell";
     const userId = parseInt(localStorage.getItem("user_id"), 10);
 
 
@@ -107,7 +107,7 @@ function venteCarte(i) {
     fetch(requestUrl)
       .then(response =>{
           if (response.ok) {
-                var apiUrl = "/users/"+userId;
+                var apiUrl = "localhost:8000/users/"+userId;
                 fetch(apiUrl)
                   .then(response =>{
                           if (response.ok) {

@@ -28,7 +28,7 @@ public class StoreService {
     }
 
     public void saveCard(CardDTO card) throws IOException {
-        String apiUrl = "http://localhost:80/cards/"+card.getId();
+        String apiUrl = "http://localhost:8000/cards/"+card.getId();
         RestTemplate restTemplate = new RestTemplate();
         // Configuration des en-têtes de la requête
         HttpHeaders headers = new HttpHeaders();
@@ -43,7 +43,7 @@ public class StoreService {
          }
 
     public void saveUser(UserConnectedDTO user) throws IOException {
-        String apiUrl = "http://localhost:80/users/"+user.getId();
+        String apiUrl = "http://localhost:8000/users/"+user.getId();
         RestTemplate restTemplate = new RestTemplate();
         // Configuration des en-têtes de la requête
         HttpHeaders headers = new HttpHeaders();
@@ -58,7 +58,7 @@ public class StoreService {
         }
 
     public CardDTO getCard(Integer card_id) throws IOException {
-        String apiUrl = "http://localhost:80/cards/"+card_id;
+        String apiUrl = "http://localhost:8000/cards/"+card_id;
         RestTemplate restTemplate = new RestTemplate();
         // Envoi de la requête GET et récupération de la réponse
         ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.GET, null, String.class);
@@ -69,7 +69,7 @@ public class StoreService {
     }
 
     public UserConnectedDTO getUser(int owner_id) throws IOException {
-        String apiUrl = "http://localhost:80/users/"+owner_id;
+        String apiUrl = "http://localhost:8000/users/"+owner_id;
         RestTemplate restTemplate = new RestTemplate();
         // Envoi de la requête GET et récupération de la réponse
         ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.GET, null, String.class);

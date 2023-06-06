@@ -30,7 +30,7 @@ console.error(error);
 
 document.addEventListener('DOMContentLoaded', function() {
   var cardList = [];
-  var apiUrl = "/cards/owner?owner_id=-1";
+  var apiUrl = "localhost:8000/cards/owner?owner_id=-1";
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function acheterCarte(i) {
     const userId = parseInt(localStorage.getItem("user_id"), 10);
     const cardId = parseInt(i);
-    var apiUrl = "/store/buy";
+    var apiUrl = "localhost:8000/store/buy";
 
 
 
@@ -116,7 +116,7 @@ function acheterCarte(i) {
     fetch(requestUrl)
       .then(response =>{
           if (response.ok) {
-              var apiUrl = "/users/"+userId;
+              var apiUrl = "localhost:8000/users/"+userId;
               fetch(apiUrl)
                 .then(response =>{
                         if (response.ok) {
