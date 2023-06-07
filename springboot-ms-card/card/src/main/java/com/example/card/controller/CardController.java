@@ -1,9 +1,8 @@
 package com.example.card.controller;
 
 import com.example.card.model.Card;
+import com.example.card.model.CardDTO;
 import com.example.card.service.CardService;
-import model.CardDTO;
-import model.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

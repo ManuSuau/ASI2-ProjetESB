@@ -1,4 +1,4 @@
-package model;
+package com.example.authentication.model;
 
 import lombok.Getter;
 import lombok.Setter;

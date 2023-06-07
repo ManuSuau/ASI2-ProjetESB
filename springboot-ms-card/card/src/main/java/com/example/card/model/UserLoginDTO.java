@@ -1,13 +1,11 @@
-package model;
+package com.example.card.model;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserConnectedDTO {
-    private Integer id;
+public class UserLoginDTO {
     private String username;
     private String password;
-    private int money;
 }

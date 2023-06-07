@@ -2,9 +2,9 @@ package com.example.user.service;
 
 import com.example.user.model.User;
 import com.example.user.repository.UserRepository;
-import model.CardDTO;
-import model.UserConnectedDTO;
-import model.UserLoginDTO;
+import com.example.user.model.CardDTO;
+import com.example.user.model.UserConnectedDTO;
+import com.example.user.model.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

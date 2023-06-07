@@ -1,8 +1,8 @@
 package com.example.authentication.controller;
 
 import com.example.authentication.service.AuthentificationService;
-import model.UserConnectedDTO;
-import model.UserLoginDTO;
+import com.example.authentication.model.UserConnectedDTO;
+import com.example.authentication.model.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

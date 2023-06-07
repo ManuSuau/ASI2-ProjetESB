@@ -13,7 +13,6 @@
         <module>springboot-ms-store/store</module>
         <module>springboot-ms-auth/authentication</module>
         <module>springboot-ms-user/user</module>
-        <module>commonlib</module>
     </modules>
 
 </project>
