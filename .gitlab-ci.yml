@@ -1,0 +1,25 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - echo "Je suis le stage de build"
+    - echo "Effectuer les étapes de construction ici"
+    - echo "Afficher d'autres messages spécifiques au build"
+
+test:
+  stage: test
+  script:
+    - echo "Je suis le stage de test"
+    - echo "Effectuer les tests ici"
+    - echo "Afficher d'autres messages spécifiques au test"
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Je suis le stage de déploiement"
+    - echo "Effectuer les étapes de déploiement ici"
+    - echo "Afficher d'autres messages spécifiques au déploiement"
