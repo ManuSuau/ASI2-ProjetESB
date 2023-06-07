@@ -7,6 +7,10 @@ docker-compose up --build
 ```
 Remarque : si besoin, ```docker-compose up --build --pull always```
 
+
+La branche la plus à jour est impl-AjoutAct2_sansCommonLib.
+
+
 Sur la branche main : 
 ```localost:8000``` permet d'appeler le reverse proxy. Par exemple, on obtient le message ```Je suis le front``` lors de l'appel à ```localost:8000/front``` (idem pour card, user, auth, store).
 
