@@ -2,7 +2,7 @@ version: '3'
 services:
   webui-service:
     build:
-      context: ../springboot-ms-webui
+      context: ../frontend/springboot-ms-webui
       dockerfile: Dockerfile
       args:
         - DIR=./webui
@@ -24,7 +24,7 @@ services:
 
   auth-service:
     build:
-      context: ../springboot-ms-auth
+      context: ../backend/springboot-ms-auth
       dockerfile: Dockerfile
       args:
         - DIR=authentication
@@ -38,7 +38,7 @@ services:
 
   user-service:
     build:
-      context: ../springboot-ms-user
+      context: ../backend/springboot-ms-user
       dockerfile: Dockerfile
       args:
         - DIR=user
@@ -52,7 +52,7 @@ services:
 
   card-service:
     build:
-      context: ../springboot-ms-card
+      context: ../backend/springboot-ms-card
       dockerfile: Dockerfile
       args:
         - DIR=card
@@ -66,7 +66,7 @@ services:
 
   store-service:
     build:
-      context: ../springboot-ms-store
+      context: ../backend/springboot-ms-store
       dockerfile: Dockerfile
       args:
         - DIR=store

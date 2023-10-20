@@ -9,7 +9,6 @@
 
     <modules>
         <module>springboot-ms-card/card</module>
-        <module>springboot-ms-webui/webui</module>
         <module>springboot-ms-store/store</module>
         <module>springboot-ms-auth/authentication</module>
         <module>springboot-ms-user/user</module>
