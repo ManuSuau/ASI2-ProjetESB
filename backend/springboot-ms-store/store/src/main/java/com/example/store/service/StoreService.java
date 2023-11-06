@@ -3,7 +3,6 @@ package com.example.store.service;
 import com.example.card.model.CardDTO;
 import com.example.user.model.UserConnectedDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
