@@ -1,7 +1,7 @@
 package com.example.authentication.service;
 
-import com.example.user.model.UserConnectedDTO;
-import com.example.user.model.UserLoginDTO;
+import com.example.user.UserConnectedDTO;
+import com.example.user.UserLoginDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;

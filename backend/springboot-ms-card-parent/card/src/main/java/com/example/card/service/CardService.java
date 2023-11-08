@@ -1,7 +1,7 @@
 package com.example.card.service;
 
 import com.example.card.model.Card;
-import com.example.card.model.CardDTO;
+import com.example.card.CardDTO;
 import com.example.card.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

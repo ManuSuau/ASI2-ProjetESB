@@ -1,4 +1,4 @@
-package com.example.card.model;
+package com.example.card;
 
 
 import lombok.AllArgsConstructor;

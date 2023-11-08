@@ -1,7 +1,7 @@
 package com.example.card;
 
 import com.example.card.model.Card;
-import com.example.card.model.CardDTO;
+import com.example.card.CardDTO;
 import com.example.card.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

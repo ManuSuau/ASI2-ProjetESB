@@ -1,6 +1,6 @@
 package com.example.user;
 
-import com.example.user.model.UserConnectedDTO;
+import com.example.user.UserConnectedDTO;
 import com.example.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

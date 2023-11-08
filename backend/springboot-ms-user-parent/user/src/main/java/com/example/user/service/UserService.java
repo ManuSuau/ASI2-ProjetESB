@@ -2,8 +2,8 @@ package com.example.user.service;
 
 import com.example.user.model.User;
 import com.example.user.repository.UserRepository;
-import com.example.user.model.UserConnectedDTO;
-import com.example.user.model.UserLoginDTO;
+import com.example.user.UserConnectedDTO;
+import com.example.user.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

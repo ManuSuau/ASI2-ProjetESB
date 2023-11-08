@@ -1,4 +1,4 @@
-package com.example.user.model;
+package com.example.user;
 
 import lombok.Getter;
 import lombok.Setter;
