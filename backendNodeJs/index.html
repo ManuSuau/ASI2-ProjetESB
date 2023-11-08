@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat App</title>
+</head>
+
+<body>
+    <h1>Chat</h1>
+    <div id="user-selection">
+        <form id="user-selection-form">
+            <label for="users">Sélectionnez un utilisateurs :</label>
+            <select id="users"></select>
+            <button type="submit">Commencer la discussion</button>
+        </form>
+    </div>
+    <div id="chat">
+        <ul id="messages"></ul>
+        <input id="message" autocomplete="off" /><button onclick="sendMessage()">Send</button>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js"></script>
+</body>
+
+</html>
