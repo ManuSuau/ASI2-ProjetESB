@@ -18,7 +18,11 @@ public class UserService {
 
 
 
-
+    @Transactional
+    public Iterable<User> getAllUser()  {
+        Iterable<User> listUser = userRepository.findAll();
+        return listUser;
+    }
     public void postUser(UserLoginDTO user){
         User u = new User();
         u.setUsername(user.getUsername());
@@ -26,7 +30,6 @@ public class UserService {
         u.setMoney(5000);
         userRepository.save(u);
     }
-
 
 
     public UserConnectedDTO PutUser(UserConnectedDTO u) {

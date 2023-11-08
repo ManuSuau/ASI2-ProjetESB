@@ -17,7 +17,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
+    @GetMapping()
+    public Iterable<User> getAllUser(){
+        return userService.getAllUser();
+   }
 
     @PostMapping()
     public void addUser(@RequestBody UserLoginDTO user) throws Exception {
@@ -34,7 +37,7 @@ public class UserController {
         return userService.PutUser(user);
     }
 
-    @GetMapping()
+    @GetMapping("/find")
     public UserConnectedDTO findByUsernameAndPassword(@RequestParam("username") String username, @RequestParam("password") String password){
         User user = userService.getUserByUsernameAndPassword(username,password);
         UserConnectedDTO dto = new UserConnectedDTO();
