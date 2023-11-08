@@ -20,4 +20,6 @@ public class AuthentificationController {
     public UserConnectedDTO testConnexion(@RequestBody UserLoginDTO user) throws Exception {
         return authentificationService.testConnexion(user.getUsername(), user.getPassword());
     }
+
+
 }
