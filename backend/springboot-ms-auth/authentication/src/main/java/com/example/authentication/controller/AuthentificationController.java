@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("auths")
 public class AuthentificationController {
@@ -16,8 +18,10 @@ public class AuthentificationController {
     @Autowired
     AuthentificationService authentificationService;
 
-    @PostMapping()
-    public UserConnectedDTO testConnexion(@RequestBody UserLoginDTO user) throws Exception {
-        return authentificationService.testConnexion(user.getUsername(), user.getPassword());
+    @PostMapping("/login")
+    public UserConnectedDTO login(@RequestBody UserLoginDTO userLoginDTO) throws IOException {
+        return authentificationService.login(userLoginDTO);
     }
+
+
 }

@@ -17,17 +17,14 @@ public class UserService {
     private UserRepository userRepository;
 
 
-
-
-    public void postUser(UserLoginDTO user){
+    public User postUser(UserLoginDTO user){
         User u = new User();
         u.setUsername(user.getUsername());
         u.setPassword(user.getPassword());
         u.setMoney(5000);
         userRepository.save(u);
+        return u;
     }
-
-
 
     public UserConnectedDTO PutUser(UserConnectedDTO u) {
         User user = new User();

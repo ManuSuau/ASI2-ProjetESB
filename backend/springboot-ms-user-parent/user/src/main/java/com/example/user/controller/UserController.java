@@ -17,8 +17,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
-
     @PostMapping()
     public void addUser(@RequestBody UserLoginDTO user) throws Exception {
         userService.postUser(user);
@@ -43,5 +41,15 @@ public class UserController {
         dto.setPassword(user.getPassword());
         dto.setMoney(user.getMoney());
         return dto;
+    }
+
+    @GetMapping("/login")
+    public User login(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
+        return userService.getUserByUsernameAndPassword(userLoginDTO.getUsername(), userLoginDTO.getPassword());
+    }
+
+    @PostMapping("/register")
+    public User register(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
+        return userService.postUser(userLoginDTO);
     }
 }
