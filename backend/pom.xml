@@ -9,7 +9,7 @@
 
     <modules>
         <module>springboot-ms-card-parent</module>
-        <module>springboot-ms-store/store</module>
+        <module>springboot-ms-store-parent</module>
         <module>springboot-ms-auth/authentication</module>
         <module>springboot-ms-user-parent</module>
     </modules>

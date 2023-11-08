@@ -2,8 +2,8 @@ package com.example.user.service;
 
 import com.example.user.model.User;
 import com.example.user.repository.UserRepository;
-import com.example.user.model.UserConnectedDTO;
-import com.example.user.model.UserLoginDTO;
+import com.example.user.UserConnectedDTO;
+import com.example.user.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,18 +23,29 @@ public class UserService {
         Iterable<User> listUser = userRepository.findAll();
         return listUser;
     }
-    public void postUser(UserLoginDTO user){
+    public User postUser(UserLoginDTO user){
         User u = new User();
         u.setUsername(user.getUsername());
         u.setPassword(user.getPassword());
         u.setMoney(5000);
         userRepository.save(u);
+        return u;
     }
+
 
 
     public UserConnectedDTO PutUser(UserConnectedDTO u) {
         User user = new User();
         user.setId(user.getId());
+        user.setUsername(u.getUsername());
+        user.setPassword(u.getPassword());
+        user.setMoney(u.getMoney());
+        userRepository.save(user);
+        return u;
+    }
+
+    public UserConnectedDTO addUser(UserConnectedDTO u) {
+        User user = new User();
         user.setUsername(u.getUsername());
         user.setPassword(u.getPassword());
         user.setMoney(u.getMoney());

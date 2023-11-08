@@ -1,7 +1,7 @@
 package com.example.store.service;
 
-import com.example.card.model.CardDTO;
-import com.example.user.model.UserConnectedDTO;
+import com.example.card.CardDTO;
+import com.example.user.UserConnectedDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;

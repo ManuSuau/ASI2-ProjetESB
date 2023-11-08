@@ -1,23 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
+import AuthComponent from "./auth-component/AuthComponent";
+import HomeComponent from "./home-component/HomeComponent";
+import StoreComponent from "./store-component/StoreComponent";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+          <AuthComponent />
     </div>
   );
 }
