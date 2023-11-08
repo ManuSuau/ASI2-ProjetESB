@@ -25,7 +25,7 @@ public class BusService {
     }
 
     public void sendMsg(String msg, String busName) {
-        System.out.println("[BUSSERVICE] SEND String MSG=["+msg+"] to Bus=["+msg+"]");
+        System.out.println("[BUSSERVICE] SEND String MSG=["+msg+"] to Bus=["+busName+"]");
         jmsTemplate.convertAndSend(busName,msg);
     }
 

@@ -38,6 +38,15 @@ public class UserService {
         userRepository.save(user);
         return u;
     }
+
+    public UserConnectedDTO addUser(UserConnectedDTO u) {
+        User user = new User();
+        user.setUsername(u.getUsername());
+        user.setPassword(u.getPassword());
+        user.setMoney(u.getMoney());
+        userRepository.save(user);
+        return u;
+    }
     @Transactional
     public Optional<User> getCardById(Integer id)  {
         return userRepository.findById(id);

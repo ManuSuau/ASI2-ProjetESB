@@ -11,8 +11,12 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.support.destination.DynamicDestinationResolver;
 
 import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Session;
 
 @EnableJms
 @SpringBootApplication
@@ -21,14 +25,6 @@ public class SpringbootMsNotifApplication {
     @Autowired
     JmsTemplate jmsTemplate;
 
-    /**
-     * Executed after application start
-     */
-    @EventListener(ApplicationReadyEvent.class)
-    public void doInitAfterStartup() {
-        //enable to be in topic mode! to do at start
-        jmsTemplate.setPubSubDomain(true);
-    }
 
     @Bean
     public JmsListenerContainerFactory< ? > connectionFactory(ConnectionFactory connectionFactory,
@@ -39,9 +35,31 @@ public class SpringbootMsNotifApplication {
         // You could still override some of Boot's default if necessary.
 
         //enable topic mode
-        factory.setPubSubDomain(true);
+        factory.setPubSubDomain(false);
         return factory;
     }
+
+
+    @Bean
+    public DynamicDestinationResolver destinationResolver() {
+        return new DynamicDestinationResolver() {
+            @Override
+            public Destination resolveDestinationName(Session session, String destinationName, boolean pubSubDomain) throws JMSException {
+                String prefixTopic = "topic.";
+                String prefixQueue = "queue.";
+                if (destinationName.startsWith(prefixTopic) || destinationName.startsWith(prefixQueue)) {
+                    if (destinationName.startsWith(prefixTopic)) {
+                        pubSubDomain = true;
+                        destinationName = destinationName.replace(prefixTopic, "");
+                    } else {
+                        destinationName = destinationName.replace(prefixQueue, "");
+                    }
+                }
+                return super.resolveDestinationName(session, destinationName, pubSubDomain);
+            }
+        };
+    }
+
 
 
     public static void main(String[] args) {
