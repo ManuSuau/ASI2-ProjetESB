@@ -3,6 +3,7 @@ package com.example.store.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -19,7 +20,7 @@ public class Transaction {
     @Column(name = "card_id", nullable = false)
     private Integer card_id;
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "type", nullable = false)
     private String type;

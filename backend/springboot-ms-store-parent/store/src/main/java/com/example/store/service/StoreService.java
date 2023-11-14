@@ -1,16 +1,26 @@
 package com.example.store.service;
 
 import com.example.card.CardDTO;
+import com.example.store.TransactionDTO;
+import com.example.store.TypeTransactionEnum;
+import com.example.store.model.Transaction;
+import com.example.store.repository.StoreRepository;
 import com.example.user.UserConnectedDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Service
 public class StoreService {
+
+    @Autowired
+    StoreRepository storeRepository;
 
     public CardDTO buyCard(Integer card_id, Long owner_id) throws IOException {
         CardDTO c =  getCard(card_id);
@@ -20,6 +30,9 @@ public class StoreService {
             u.setMoney((int) (u.getMoney()-c.getPrix()));
             saveUser(u);
             saveCard(c);
+            TransactionDTO t = new TransactionDTO(Integer.valueOf(owner_id.toString()),card_id, LocalDate.now(), TypeTransactionEnum.ACHAT);
+            Transaction transaction = mappeurDTO(t);
+            storeRepository.save(transaction);
             return c;
         }else{
             return null;
@@ -85,7 +98,20 @@ public class StoreService {
         saveUser(u);
         c.setOwner_id(null);
         saveCard(c);
+        TransactionDTO t = new TransactionDTO(Integer.valueOf(u.getId().toString()),card_id, LocalDate.now(), TypeTransactionEnum.VENTE);
+        Transaction transaction = mappeurDTO(t);
+        storeRepository.save(transaction);
         return c;
+    }
+
+
+    public Transaction mappeurDTO(TransactionDTO t){
+        Transaction transac = new Transaction();
+        transac.setUser_id(t.getUser_id());
+        transac.setCard_id(t.getCard_id());
+        transac.setType(t.getType().toString());
+        transac.setDate(t.getDate());
+        return transac;
     }
 
 }
