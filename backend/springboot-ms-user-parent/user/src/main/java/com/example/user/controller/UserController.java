@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping("users")
 public class UserController {
 
@@ -48,7 +49,7 @@ public class UserController {
         return dto;
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public User login(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
         return userService.getUserByUsernameAndPassword(userLoginDTO.getUsername(), userLoginDTO.getPassword());
     }

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping("cards")
 public class CardController {
 
@@ -35,5 +36,7 @@ public class CardController {
     public List<CardDTO> findByOwner(@RequestParam("owner_id") Long owner_id){
         return cardService.getCardByOwner(owner_id);
     }
+
+
 
 }

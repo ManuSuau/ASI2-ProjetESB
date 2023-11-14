@@ -48,13 +48,7 @@ public class CardService {
     }
     @Transactional
     public List<CardDTO> getCardByOwner(Long owner)  {
-        if(owner>=0){
             return mappeurCards(cardRepository.findByOwner(owner));
-        }else{
-            return mappeurCards(cardRepository.findCardWithoutOwner());
-        }
-
-
     }
 
     public CardDTO mappeurCard(Card c){
