@@ -2,24 +2,32 @@
 import React, { Component } from 'react';
 import Box from "@mui/material/Box";
 import {Button, Card, Icon} from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import HeaderBox from "../utilities/header";
 
-class HomeComponent extends Component {
-    render() {
+function HomeComponent (props : any) {
+
+    const navigate = useNavigate();
+
+    const handleBuy = () => {
+        navigate('/buy');
+    }
+
+    const handleSell = () => {
+        navigate('/sell');
+    }
+
+    //get user data from local storage
+
         return (
             <div>
-                <Box sx={{ flexGrow: 1, borderBottom : 1 }}>
-                    <div style={{display : 'flex', flexDirection : 'row', alignItems : 'center',justifyContent : 'space-around' }}>
-                        <h3>5000 $</h3>
-                        <h2>Home</h2>
-                        <Button variant="contained" color="primary" startIcon={<Icon></Icon>}>Max Dupont</Button>
-                    </div>
-                </Box>
+                <HeaderBox title={"Home"}/>
                 <div style={{display : 'flex', flexDirection : 'row', alignItems : 'center',justifyContent : 'space-around', height : '80vh' }}>
                     <Card>
-                        <Button size='large' variant="contained" color="primary">Buy</Button>
+                        <Button size='large' variant="contained" color="primary" onClick={handleBuy}>Buy</Button>
                     </Card>
                     <Card>
-                        <Button size='large' variant="contained" color="primary">Sell</Button>
+                        <Button size='large' variant="contained" color="primary" onClick={handleSell}>Sell</Button>
                     </Card>
                     <Card>
                         <Button size='large' variant="contained" color="primary">Play</Button>
@@ -28,6 +36,5 @@ class HomeComponent extends Component {
             </div>
         );
     }
-}
 
 export default HomeComponent;
