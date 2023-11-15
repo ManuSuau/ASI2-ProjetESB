@@ -17,7 +17,7 @@ public class AuthentificationService {
 
 
     public String login(UserLoginDTO userLoginDTO) throws IOException {
-        String apiUrl = "http://localhost:8083/users/login?username=" + userLoginDTO.getUsername() + "&password=" + userLoginDTO.getPassword() + "";
+        String apiUrl = "http://localhost:8083/users/login";
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -33,7 +33,7 @@ public class AuthentificationService {
     }
 
     public String register(UserLoginDTO userLoginDTO) throws IOException {
-        String apiUrl = "http://localhost:8083/users/register?username=" + userLoginDTO.getUsername() + "&password=" + userLoginDTO.getPassword() + "";
+        String apiUrl = "http://localhost:8083/users";
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();

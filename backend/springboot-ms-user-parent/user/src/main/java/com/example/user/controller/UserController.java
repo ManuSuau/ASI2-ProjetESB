@@ -39,24 +39,8 @@ public class UserController {
         userService.PutUser(user);
     }
 
-    @GetMapping("/find")
-    public UserConnectedDTO findByUsernameAndPassword(@RequestParam("username") String username, @RequestParam("password") String password){
-        User user = userService.getUserByUsernameAndPassword(username,password);
-        UserConnectedDTO dto = new UserConnectedDTO();
-        dto.setId(user.getId());
-        dto.setUsername(user.getUsername());
-        dto.setPassword(user.getPassword());
-        dto.setMoney(user.getMoney());
-        return dto;
-    }
-
     @PostMapping("/login")
-    public User login(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
+    public User login(@RequestBody UserLoginDTO userLoginDTO) {
         return userService.getUserByUsernameAndPassword(userLoginDTO.getUsername(), userLoginDTO.getPassword());
-    }
-
-    @PostMapping("/register")
-    public void register(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
-        userService.postUser(userLoginDTO);
     }
 }
