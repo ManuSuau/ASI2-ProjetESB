@@ -3,6 +3,7 @@ HELP.md
 !backend/springboot-ms-auth/authentication/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+backend/data
 
 ### STS ###
 .apt_generated
