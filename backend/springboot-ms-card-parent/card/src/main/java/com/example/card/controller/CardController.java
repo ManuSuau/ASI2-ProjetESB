@@ -23,7 +23,7 @@ public class CardController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Card> findById(@PathVariable("id") Integer id){
+    public CardDTO findById(@PathVariable("id") Integer id){
         return cardService.getCardById(id);
     }
 

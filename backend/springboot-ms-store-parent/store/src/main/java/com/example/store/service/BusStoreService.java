@@ -39,5 +39,14 @@ public class BusStoreService {
         });
     }
 
+    public void sendMsg(String message) {
+        System.out.println("[BUSSERVICE] SEND String MSG=["+message+"] to Bus=[NOTIFBUS]");
+
+        jmsTemplate.send("NOTIFBUS", s -> {
+            TextMessage msg = s.createTextMessage(message);
+            return msg;
+        });
+    }
+
 
 }

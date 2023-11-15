@@ -28,9 +28,12 @@ public class CardService {
     }
 
     @Transactional
-    public Optional<Card> getCardById(Integer id)  {
+    public CardDTO getCardById(Integer id)  {
         Optional<Card> card = cardRepository.findById(id);
-        return card;
+        if(card.isPresent()){
+            return mappeurCard(card.get());
+        }
+        return null;
     }
 
     @Transactional
@@ -40,9 +43,9 @@ public class CardService {
     }
 
 
-    public Card addCard(Card card) {
+    public void addCard(Card card) {
         cardRepository.save(card);
-        return card;
+        busService.sendMsg("Modification de votre liste de carte terminée");
     }
 
 

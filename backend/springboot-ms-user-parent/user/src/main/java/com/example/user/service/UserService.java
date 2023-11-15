@@ -40,6 +40,7 @@ public class UserService {
         user.setPassword(u.getPassword());
         user.setMoney(u.getMoney());
         userRepository.save(user);
+        busUserService.sendMsg("votre porte-feuille virtuel à été mis à jour");
     }
 
     public void addUserByLogin(UserLoginDTO u) {
@@ -48,6 +49,7 @@ public class UserService {
         user.setPassword(u.getPassword());
         user.setMoney(5000);
         userRepository.save(user);
+        busUserService.sendMsg("L'utilisateur"+u.getUsername()+"à été crée");
     }
 
     @Transactional
