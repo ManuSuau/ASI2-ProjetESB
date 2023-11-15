@@ -26,10 +26,7 @@ public class AuthentificationService {
 
         // Envoi de la requête GET et récupération de la réponse
         ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, request, String.class);
-        // Extraction des données de la réponse
-        String responseBody = response.getBody();
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(responseBody, String.class);
+        return response.getBody();
     }
 
     public String register(UserLoginDTO userLoginDTO) throws IOException {
@@ -43,8 +40,7 @@ public class AuthentificationService {
         HttpEntity<UserLoginDTO> request = new HttpEntity<>(userLoginDTO, headers);
 
         ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, request, String.class);
-        String responseBody = response.getBody();
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(responseBody, String.class);
+        return response.getBody();
+
     }
 }

@@ -66,10 +66,8 @@ public class StoreService {
         // Création de l'objet HttpEntity contenant l'objet CardDTO dans le corps de la requête
         HttpEntity<UserConnectedDTO> requestEntity = new HttpEntity<>(user, headers);
         // Envoi de la requête PUT et récupération de la réponse
-        ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.PUT, requestEntity, String.class);
-        // Extraction des données de la réponse
-        String responseBody = response.getBody();
-        ObjectMapper objectMapper = new ObjectMapper();
+        restTemplate.exchange(apiUrl, HttpMethod.PUT, requestEntity, String.class);
+
     }
 
     public CardDTO getCard(Integer card_id) throws IOException {
