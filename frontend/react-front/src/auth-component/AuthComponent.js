@@ -3,8 +3,11 @@
 import React, {Component, useState} from 'react';
 import {Button, Card, FormGroup, Input} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setUser } from '../store/actions';
 
 function AuthComponent() {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const navigateHome = () => {
@@ -13,6 +16,10 @@ function AuthComponent() {
     };
     const [isLogin, setIsLogin] = useState(true);
 
+
+    function refreshPage() {
+        window.location.reload(false);
+    }
 
     function doAction() {
         if (isLogin === true) {
@@ -31,10 +38,12 @@ function AuthComponent() {
                         alert("Wrong username or password");
                     }
                     else {
-                        localStorage.setItem("token", data.token);
-                        localStorage.setItem("username", data.username);
-                        localStorage.setItem("id", data.id);
-                        localStorage.setItem("money", data.money);
+                        const loggedUser = {
+                            username: data.username,
+                            id: data.id,
+                            money: data.money
+                        }
+                        dispatch(setUser(loggedUser));
                         navigateHome();
                     }
 
@@ -51,20 +60,24 @@ function AuthComponent() {
                 },
                 body: JSON.stringify({username : document.getElementsByName("username")[0].value, password : document.getElementsByName("password")[0].value}),
             })
-                .then(response => response.json())
+                .then(response => response.text()) // or response.json() if the response is in JSON format
                 .then(data => {
                     console.log('Success:', data);
-                    localStorage.setItem("token", data.token);
-                    localStorage.setItem("username", data.username);
-                    localStorage.setItem("id", data.id);
-                    localStorage.setItem("money", data.money);
-                    navigateHome();
+                    alert(data)
+                    // Delay for 2 seconds (2000 milliseconds) before navigating
+                    setTimeout(() => {
+                        refreshPage();
+                    }, 2000);
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
         }
     }
+
+
+    const sanitizedHTML=DOMPurify.sanitize()
+
 
     return (
             <Card style={{width : "50%", margin : 'auto'}}>
