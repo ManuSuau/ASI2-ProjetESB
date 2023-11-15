@@ -16,6 +16,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BusUserService busUserService;
+
 
 
     @Transactional
@@ -23,35 +26,30 @@ public class UserService {
         Iterable<User> listUser = userRepository.findAll();
         return listUser;
     }
-    public User postUser(UserLoginDTO user){
-        User u = new User();
-        u.setUsername(user.getUsername());
-        u.setPassword(user.getPassword());
-        u.setMoney(5000);
-        userRepository.save(u);
-        return u;
+    public void postUser(UserLoginDTO user){
+        busUserService.sendMsg(user,"USERBUS");
     }
 
-
-
-    public UserConnectedDTO PutUser(UserConnectedDTO u) {
-        User user = new User();
-        user.setId(user.getId());
-        user.setUsername(u.getUsername());
-        user.setPassword(u.getPassword());
-        user.setMoney(u.getMoney());
-        userRepository.save(user);
-        return u;
+    public void PutUser(UserConnectedDTO u) {
+        busUserService.sendMsg(u,"USERBUS");
     }
 
-    public UserConnectedDTO addUser(UserConnectedDTO u) {
+    public void addUser(UserConnectedDTO u) {
         User user = new User();
         user.setUsername(u.getUsername());
         user.setPassword(u.getPassword());
         user.setMoney(u.getMoney());
         userRepository.save(user);
-        return u;
     }
+
+    public void addUserByLogin(UserLoginDTO u) {
+        User user = new User();
+        user.setUsername(u.getUsername());
+        user.setPassword(u.getPassword());
+        user.setMoney(5000);
+        userRepository.save(user);
+    }
+
     @Transactional
     public Optional<User> getCardById(Integer id)  {
         return userRepository.findById(id);
@@ -60,5 +58,9 @@ public class UserService {
     @Transactional
     public User getUserByUsernameAndPassword(String u, String p )  {
         return userRepository.findByUsernameAndPassword(u,p);
+    }
+
+    public void deleteAll(){
+        userRepository.deleteAll();
     }
 }

@@ -6,16 +6,47 @@ import com.example.card.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
+import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
+import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.support.destination.DynamicDestinationResolver;
+
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Session;
 
 @SpringBootApplication
+@EnableJms
 public class CardApplication {
     @Autowired
     private CardService cardService;
 
+    @Autowired
+    JmsTemplate jmsTemplate;
+
+
+    @Bean
+    public JmsListenerContainerFactory< ? > connectionFactory(ConnectionFactory connectionFactory,
+                                                              DefaultJmsListenerContainerFactoryConfigurer configurer) {
+        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        // This provides all boot's default to this factory, including the message converter
+        configurer.configure(factory, connectionFactory);
+        // You could still override some of Boot's default if necessary.
+
+        //enable queue mode
+        factory.setPubSubDomain(false);
+        return factory;
+    }
+
     @EventListener(ApplicationReadyEvent.class)
-    public void doInitAfterStartup() {//enable to be in topic mode! to do at start
+    public void doInitAfterStartup() {
+        cardService.deleteAll();
         CardDTO card1 = new CardDTO("Bulbasaur", "A grass and poison-type Pokémon with a plant bulb on its back.", "", 2, 2, 250, 0);
         cardService.addCard(cardService.mappeurDTO(card1));
         CardDTO card2 = new CardDTO("Charmander", "A fire-type Pokémon with a flame burning on the end of its tail.", "", 2, 2, 250, 0);
@@ -43,8 +74,6 @@ public class CardApplication {
     }
     public static void main(String[] args) {
         SpringApplication.run(CardApplication.class, args);
-
-        // Create Card objects and set their properties
 
     }
 

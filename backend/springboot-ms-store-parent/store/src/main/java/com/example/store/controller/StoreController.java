@@ -19,13 +19,13 @@ public class StoreController {
     StoreService storeService;
 
     @GetMapping("/buy")
-    public CardDTO buyCard(@RequestParam("card_id") Integer card_id, @RequestParam("user_id") Integer user_id) throws IOException {
-        return storeService.buyCard(card_id,user_id.longValue());
+    public void buyCard(@RequestParam("card_id") Integer card_id, @RequestParam("user_id") Integer user_id) throws IOException {
+        storeService.buyCard(card_id,user_id.longValue());
     }
 
     @GetMapping("/sell")
-    public CardDTO sellCard(@RequestParam("card_id") Integer card_id) throws IOException {
-        return storeService.sellCard(card_id);
+    public void sellCard(@RequestParam("card_id") Integer card_id) throws IOException {
+        storeService.sellCard(card_id);
     }
 
 }

@@ -34,8 +34,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserConnectedDTO ModifyById(@RequestBody UserConnectedDTO user){
-        return userService.PutUser(user);
+    public void ModifyById(@RequestBody UserConnectedDTO user){
+        userService.PutUser(user);
     }
 
     @GetMapping("/find")
@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
-        return userService.postUser(userLoginDTO);
+    public void register(@RequestBody UserLoginDTO userLoginDTO) throws Exception {
+        userService.postUser(userLoginDTO);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.springbootmsnotif.controller;
 
-import com.example.card.model.CardDTO;
+import com.example.card.CardDTO;
 import com.example.springbootmsnotif.service.BusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.example.springbootmsnotif.service;
+package com.example.card.service;
 
 import com.example.card.CardDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.jms.TextMessage;
 
 @Service
-public class BusService {
+public class BusCardService {
 
     @Autowired
     JmsTemplate jmsTemplate;
@@ -19,18 +19,8 @@ public class BusService {
     ObjectMapper objectMapper;
 
 
-    public void sendMsg(String msg) {
-        System.out.println("[BUSSERVICE] SEND String MSG=["+msg+"]");
-        jmsTemplate.convertAndSend("RESULT_BUS_MNG",msg);
-    }
-
-    public void sendMsg(String msg, String busName) {
-        System.out.println("[BUSSERVICE] SEND String MSG=["+msg+"] to Bus=["+busName+"]");
-        jmsTemplate.convertAndSend(busName,msg);
-    }
-
     public void sendMsg(CardDTO cardDTO) {
-        sendMsg(cardDTO, "RESULT_BUS_MNG");
+        sendMsg(cardDTO, "CARDBUS");
     }
 
     public void sendMsg(CardDTO cardDTO, String busName) {

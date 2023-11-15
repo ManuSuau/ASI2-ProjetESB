@@ -28,8 +28,8 @@ public class CardController {
     }
 
     @PutMapping("/{id}")
-    public CardDTO ModifyById(@RequestBody CardDTO card){
-        return cardService.PutCard(card);
+    public void ModifyById(@RequestBody CardDTO card){
+        cardService.PutCard(card);
     }
 
     @GetMapping("/owner")

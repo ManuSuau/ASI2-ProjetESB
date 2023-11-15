@@ -18,6 +18,8 @@ public class CardService {
     @Autowired
     private CardRepository cardRepository;
 
+    @Autowired
+    private BusCardService busService;
 
     @Transactional
     public Card getCardByName(String i)  {
@@ -43,12 +45,17 @@ public class CardService {
         return card;
     }
 
-    public CardDTO PutCard(CardDTO card) {
-        return mappeurCard(addCard(mappeurDTO(card)));
+
+    public void PutCard(CardDTO card) {
+        busService.sendMsg(card);
     }
     @Transactional
     public List<CardDTO> getCardByOwner(Long owner)  {
             return mappeurCards(cardRepository.findByOwner(owner));
+    }
+
+    public void deleteAll(){
+        cardRepository.deleteAll();
     }
 
     public CardDTO mappeurCard(Card c){

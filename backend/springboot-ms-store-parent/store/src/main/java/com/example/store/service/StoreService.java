@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Service
 public class StoreService {
@@ -22,7 +21,10 @@ public class StoreService {
     @Autowired
     StoreRepository storeRepository;
 
-    public CardDTO buyCard(Integer card_id, Long owner_id) throws IOException {
+    @Autowired
+    BusStoreService busStoreService;
+
+    public void buyCard(Integer card_id, Long owner_id) throws IOException {
         CardDTO c =  getCard(card_id);
         UserConnectedDTO u = getUser(owner_id.intValue());
         if(u.getMoney()>c.getPrix()) {
@@ -31,11 +33,7 @@ public class StoreService {
             saveUser(u);
             saveCard(c);
             TransactionDTO t = new TransactionDTO(Integer.valueOf(owner_id.toString()),card_id, LocalDate.now(), TypeTransactionEnum.ACHAT);
-            Transaction transaction = mappeurDTO(t);
-            storeRepository.save(transaction);
-            return c;
-        }else{
-            return null;
+            busStoreService.sendMsg(t);
         }
     }
 
@@ -52,6 +50,11 @@ public class StoreService {
         // Extraction des données de la réponse
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
+    }
+
+    public void saveTransaction(TransactionDTO transactionDTO){
+        Transaction transaction = mappeurDTO(transactionDTO);
+        storeRepository.save(transaction);
     }
 
     public void saveUser(UserConnectedDTO user) throws IOException {
@@ -91,7 +94,7 @@ public class StoreService {
         return objectMapper.readValue(responseBody, UserConnectedDTO.class);
     }
 
-    public CardDTO sellCard(Integer card_id) throws IOException {
+    public void sellCard(Integer card_id) throws IOException {
         CardDTO c =  getCard(card_id);
         UserConnectedDTO u = getUser(c.getOwner_id().intValue());
         u.setMoney((int) (u.getMoney()+c.getPrix()));
@@ -99,9 +102,7 @@ public class StoreService {
         c.setOwner_id(0L);
         saveCard(c);
         TransactionDTO t = new TransactionDTO(Integer.valueOf(u.getId().toString()),card_id, LocalDate.now(), TypeTransactionEnum.VENTE);
-        Transaction transaction = mappeurDTO(t);
-        storeRepository.save(transaction);
-        return c;
+        busStoreService.sendMsg(t);
     }
 
 
@@ -113,5 +114,4 @@ public class StoreService {
         transac.setDate(t.getDate());
         return transac;
     }
-
 }
