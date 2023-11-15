@@ -16,7 +16,7 @@ import java.util.Optional;
 public class AuthentificationService {
 
 
-    public UserConnectedDTO login(UserLoginDTO userLoginDTO) throws IOException {
+    public String login(UserLoginDTO userLoginDTO) throws IOException {
         String apiUrl = "http://localhost:8083/users/login?username=" + userLoginDTO.getUsername() + "&password=" + userLoginDTO.getPassword() + "";
         RestTemplate restTemplate = new RestTemplate();
 
@@ -29,16 +29,10 @@ public class AuthentificationService {
         // Extraction des données de la réponse
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
-        if (responseBody == null) {
-            return new UserConnectedDTO();
-        }
-        else {
-            UserConnectedDTO userDTO = objectMapper.readValue(responseBody, UserConnectedDTO.class);
-            return userDTO;
-        }
+        return objectMapper.readValue(responseBody, String.class);
     }
 
-    public UserConnectedDTO register(UserLoginDTO userLoginDTO) throws IOException {
+    public String register(UserLoginDTO userLoginDTO) throws IOException {
         String apiUrl = "http://localhost:8083/users/register?username=" + userLoginDTO.getUsername() + "&password=" + userLoginDTO.getPassword() + "";
         RestTemplate restTemplate = new RestTemplate();
 
@@ -51,7 +45,6 @@ public class AuthentificationService {
         ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, request, String.class);
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
-        UserConnectedDTO userDTO = objectMapper.readValue(responseBody, UserConnectedDTO.class);
-        return userDTO;
+        return objectMapper.readValue(responseBody, String.class);
     }
 }

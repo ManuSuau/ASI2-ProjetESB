@@ -17,12 +17,12 @@ public class AuthentificationController {
     AuthentificationService authentificationService;
 
     @PostMapping("/login")
-    public UserConnectedDTO login(@RequestBody UserLoginDTO userLoginDTO) throws IOException {
+    public String login(@RequestBody UserLoginDTO userLoginDTO) throws IOException {
         return authentificationService.login(userLoginDTO);
     }
 
     @PostMapping("/register")
-    public UserConnectedDTO register(@RequestBody UserLoginDTO userLoginDTO) throws IOException {
+    public String register(@RequestBody UserLoginDTO userLoginDTO) throws IOException {
         return authentificationService.register(userLoginDTO);
     }
 
