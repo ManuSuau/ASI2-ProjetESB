@@ -19,13 +19,15 @@ public class StoreController {
     StoreService storeService;
 
     @GetMapping("/buy")
-    public void buyCard(@RequestParam("card_id") Integer card_id, @RequestParam("user_id") Integer user_id) throws IOException {
+    public String buyCard(@RequestParam("card_id") Integer card_id, @RequestParam("user_id") Integer user_id) throws IOException {
         storeService.buyCard(card_id,user_id.longValue());
+        return "carte en cours d'achat";
     }
 
     @GetMapping("/sell")
-    public void sellCard(@RequestParam("card_id") Integer card_id) throws IOException {
+    public String sellCard(@RequestParam("card_id") Integer card_id) throws IOException {
         storeService.sellCard(card_id);
+        return "carte en cours de vente";
     }
 
 }

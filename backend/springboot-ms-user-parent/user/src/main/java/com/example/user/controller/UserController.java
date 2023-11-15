@@ -24,8 +24,9 @@ public class UserController {
    }
 
     @PostMapping()
-    public void addUser(@RequestBody UserLoginDTO user) throws Exception {
+    public String addUser(@RequestBody UserLoginDTO user) throws Exception {
         userService.postUser(user);
+        return "Création de l'utilisateur en cours";
     }
 
     @GetMapping("/{id}")
