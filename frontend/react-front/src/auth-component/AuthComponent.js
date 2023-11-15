@@ -76,8 +76,6 @@ function AuthComponent() {
     }
 
 
-    const sanitizedHTML=DOMPurify.sanitize()
-
 
     return (
             <Card style={{width : "50%", margin : 'auto'}}>
