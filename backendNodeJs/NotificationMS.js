@@ -1,11 +1,8 @@
 const app = require('express')();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {cors: {origin: "*"}});
 const stompit = require('stompit');
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
 
 const connectOptions = {
   host: '127.0.0.1',
@@ -48,6 +45,6 @@ io.on('connection', function(socket){
   console.log('Un utilisateur s\'est connecté');
 });
 
-server.listen(3000, function(){
-  console.log('Le serveur est en écoute sur le port 3000');
+server.listen(3333, function(){
+  console.log('Le serveur est en écoute sur le port 3333');
 });

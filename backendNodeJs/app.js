@@ -8,8 +8,7 @@ const server = http.createServer(app);
 const io = socketIO(server);
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
+    res.send('Je suis le microservice notification');});
 
 app.get('/get-users', async (req, res) => {
     try {

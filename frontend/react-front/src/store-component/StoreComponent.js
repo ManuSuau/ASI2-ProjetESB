@@ -5,10 +5,28 @@ import {useNavigate} from "react-router-dom";
 import HeaderBox from "../utilities/header";
 import PokemonCard from "../utilities/pokemonCard";
 import {useDispatch, useSelector} from "react-redux";
-import {selectUser, reduceMoney} from "../store/actions";
-
+import {selectUser} from "../store/actions";
+import {io} from "socket.io-client";
 
 function StoreComponent (data : string) {
+
+
+    useEffect(() => {
+        const socket = io('http://localhost:3333');
+
+        socket.connect();
+
+
+        // Handle events within useEffect
+        socket.on('connect', () => {
+            console.log('Connected to the WebSocket');
+        });
+
+
+        socket.on('myEvent2', (data) => {
+            console.log(data);
+        });
+    }, []);
 
     const [cards, setCards] = React.useState([]);
     const [isBuy, setIsBuy] = React.useState(data.data === "buy");
