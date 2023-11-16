@@ -4,14 +4,12 @@ package com.example.store.controller;
 import com.example.card.CardDTO;
 import com.example.store.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @RestController
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping("store")
 public class StoreController {
 

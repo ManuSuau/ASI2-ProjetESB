@@ -86,7 +86,8 @@ function AuthComponent() {
                         <Button variant="contained" color="primary" onClick={() => doAction()}>{isLogin === true ? "Login" : "Register"}</Button>
                     {isLogin === true ? <Button variant="contained" color="primary" onClick={() => setIsLogin(false)}>Or register</Button> : null }
                 </FormGroup>
-            </Card>        )
+            </Card>
+    )
 }
 
 export default AuthComponent;

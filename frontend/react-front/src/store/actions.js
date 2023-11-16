@@ -6,3 +6,12 @@ export const setUser = (user) => ({
 
 
 export const selectUser = (state) => state.user; // Assuming your user data is stored in 'user'
+
+
+//reduce money action
+export const reduceMoney = (amount) => ({
+    type: 'REDUCE_MONEY',
+    payload: amount,
+});
+
+//add money action

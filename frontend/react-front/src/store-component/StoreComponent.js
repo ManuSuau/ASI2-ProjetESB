@@ -4,8 +4,8 @@ import {Button, Card, Table, TableBody, TableCell, TableHead, TableRow} from "@m
 import {useNavigate} from "react-router-dom";
 import HeaderBox from "../utilities/header";
 import PokemonCard from "../utilities/pokemonCard";
-import {useSelector} from "react-redux";
-import {selectUser} from "../store/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {selectUser, reduceMoney} from "../store/actions";
 
 
 function StoreComponent (data : string) {
@@ -13,6 +13,7 @@ function StoreComponent (data : string) {
     const [cards, setCards] = React.useState([]);
     const [isBuy, setIsBuy] = React.useState(data.data === "buy");
     const [selectedRow, setSelectedRow] = useState(null);
+    const dispatch = useDispatch();
 
     const loggedUser = useSelector(selectUser);
 
@@ -40,24 +41,36 @@ function StoreComponent (data : string) {
         setSelectedRow(row);
         // You can perform additional actions on row selection if needed
     };
-    async function BuyAction() {
+    function BuyAction() {
         try {
             if (loggedUser.money < selectedRow.prix) {
                 alert("You don't have enough money")
                 return;
             }
+            dispatch(reduceMoney(selectedRow.prix));
+            loggedUser.money -= selectedRow.prix;
             let url = `http://localhost:8082/store/buy?card_id=${selectedRow.id}&user_id=${loggedUser.id}`;
-            const response = await fetch(url);
-            const data = await response.json();
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(r => r.text()).then(r => alert(r));
         } catch (error) {
             console.error('Error:', error);
         }
     }
-    async function SellAction() {
+    function SellAction() {
         try {
+            dispatch(reduceMoney(-selectedRow.prix));
+            loggedUser.money += selectedRow.prix;
             let url = `http://localhost:8082/store/sell?card_id=${selectedRow.id}`;
-            const response = await fetch(url);
-            const data = await response.json();
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then(r => r.json()).then(r => alert(r));
         } catch (error) {
             console.error('Error:', error);
         }

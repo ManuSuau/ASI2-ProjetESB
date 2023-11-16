@@ -5,7 +5,7 @@ import AuthComponent from "./auth-component/AuthComponent";
 import HomeComponent from "./home-component/HomeComponent";
 import StoreComponent from "./store-component/StoreComponent";
 import {Provider} from "react-redux";
-import store from "./store/store";
+import {store} from "./store/store";
 
 function App() {
   return (

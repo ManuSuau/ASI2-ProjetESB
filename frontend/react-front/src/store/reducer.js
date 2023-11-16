@@ -10,6 +10,14 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 user: action.payload,
             };
+        case 'REDUCE_MONEY':
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    money: state.user.money - action.payload,
+                },
+            };
         default:
             return state;
     }
