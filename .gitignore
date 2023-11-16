@@ -5,6 +5,7 @@ HELP.md
 !**/src/test/**/target/
 backend/data
 /frontend/react-front/node_modules
+node_modules
 
 ### STS ###
 .apt_generated
