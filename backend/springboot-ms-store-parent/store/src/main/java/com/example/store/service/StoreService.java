@@ -27,7 +27,7 @@ public class StoreService {
     public void buyCard(Integer card_id, Long owner_id) throws IOException {
         CardDTO c =  getCard(card_id);
         UserConnectedDTO u = getUser(owner_id.intValue());
-        if(u.getMoney()>c.getPrix()) {
+        if(u.getMoney()>=c.getPrix()) {
             c.setOwner_id(owner_id);
             u.setMoney((int) (u.getMoney()-c.getPrix()));
             saveUser(u);
