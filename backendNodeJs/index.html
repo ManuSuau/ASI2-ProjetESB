@@ -1,25 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
+    <!-- Ajoutez le lien vers Bootstrap CSS ici -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        /* Ajoutez vos styles personnalisés ici */
+        .message-bubble {
+            padding: 8px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+    
+        .sent-message {
+            color: #fff;
+            text-align: left;
+        }
+    
+        .received-message {
+            color: #fff;
+            text-align: right; /* Aligner les messages reçus à droite */
+        }
+    
+        .message-content {
+            padding: 8px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+    
+        /* Ajout de la classe pour aligner à droite les messages reçus */
+        .received-message.align-right {
+            text-align: right;
+        }
+    
+        .sent-message.align-left {
+            text-align: left;
+        }
+
+        .messageitem{
+            border: none;
+        }
+
+        .listmessage{
+            border: 1px solid rgba(0,0,0,.125); 
+            height: 70vh;
+            overflow-y: auto; /* Ajout de la propriété pour le défilement vertical */
+        }
+
+
+    </style>
 </head>
 
 <body>
-    <h1>Chat</h1>
-    <div id="user-selection">
-        <form id="user-selection-form">
-            <label for="users">Sélectionnez un utilisateurs :</label>
-            <select id="users"></select>
-            <button type="submit">Commencer la discussion</button>
-        </form>
+    <div class="container">
+        <div id="user-selection">
+            <h1>Connectez-vous</h1>
+            <form id="user-selection-form">
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur:</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe:</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>
+        </div>
+
+        <div id="chat" style="display: none;">
+            <h1 id="user-info"></h1>
+            <div>
+                <label for="recipient">Choisir un destinataire:</label>
+                <select class="form-control" id="recipient">
+                    <!-- Options mises à jour dynamiquement via JavaScript -->
+                </select>
+            </div>
+            <ul id="messages" class="list-group listmessage">
+                <!-- Liste des messages -->
+            </ul>
+            <div class="d-flex align-items-center">
+                <input type="text" class="form-control" id="message" placeholder="Tapez votre message...">
+                <button id="send-message-button" class="btn btn-primary ml-2">Envoyer</button>
+            </div>
+            
+        </div>
     </div>
-    <div id="chat">
-        <ul id="messages"></ul>
-        <input id="message" autocomplete="off" /><button onclick="sendMessage()">Send</button>
-    </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/app.js"></script>
+
+    <!-- Ajoutez le lien vers Bootstrap JS et Socket.io ici -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="/client.js"></script>
 </body>
 
 </html>
