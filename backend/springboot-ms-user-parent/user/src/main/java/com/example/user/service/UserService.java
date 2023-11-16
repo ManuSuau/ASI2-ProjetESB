@@ -36,6 +36,9 @@ public class UserService {
 
     public void addUser(UserConnectedDTO u) {
         User user = new User();
+        if(u.getId()!=null){
+            user.setId(u.getId());
+        }
         user.setUsername(u.getUsername());
         user.setPassword(u.getPassword());
         user.setMoney(u.getMoney());
