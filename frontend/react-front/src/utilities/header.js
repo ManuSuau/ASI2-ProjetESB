@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {selectUser} from "../store/actions";
+import {selectUser, removeUser} from "../store/actions";
 
 
 function HeaderBox (data : string) {
@@ -18,13 +18,19 @@ function HeaderBox (data : string) {
     const username = loggedUser ? loggedUser.username : 'Loading...';
     const money = loggedUser ? loggedUser.money : 0;
 
+    function logout() {
+        removeUser();
+        navigate('/');
+    }
+
     return (
         <div className="header-box">
             <Box sx={{ flexGrow: 1, borderBottom : 1 }}>
                 <div style={{display : 'flex', flexDirection : 'row', alignItems : 'center',justifyContent : 'space-around' }}>
                     <h3>{username} : {money} $</h3>
                     <h2>{data.title}</h2>
-                    {data.title === "Store" && <Button variant="contained" color="primary" onClick={() => navigateToHome()}>Home</Button>}
+                    {data.title === "Store" ? <Button variant="contained" color="primary" onClick={() => navigateToHome()}>Home</Button> :
+                        <Button variant="contained" color="primary" onClick={() => logout()}>Logout</Button>}
                 </div>
             </Box>
         </div>

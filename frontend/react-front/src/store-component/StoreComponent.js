@@ -13,6 +13,7 @@ function StoreComponent (data : string) {
     const [cards, setCards] = React.useState([]);
     const [isBuy, setIsBuy] = React.useState(data.data === "buy");
     const [selectedRow, setSelectedRow] = useState(null);
+    const [isActionDone, setIsActionDone] = useState(false);
     const dispatch = useDispatch();
 
     const loggedUser = useSelector(selectUser);
@@ -47,30 +48,34 @@ function StoreComponent (data : string) {
                 alert("You don't have enough money")
                 return;
             }
-            dispatch(reduceMoney(selectedRow.prix));
-            loggedUser.money -= selectedRow.prix;
+            //dispatch(reduceMoney(selectedRow.prix));
+            //loggedUser.money -= selectedRow.prix;
             let url = `http://localhost:8082/store/buy?card_id=${selectedRow.id}&user_id=${loggedUser.id}`;
             fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 }
-            }).then(r => r.text()).then(r => alert(r));
+            }).then(r => r.text()).then(r => {
+                setIsActionDone(true);
+            });
         } catch (error) {
             console.error('Error:', error);
         }
     }
     function SellAction() {
         try {
-            dispatch(reduceMoney(-selectedRow.prix));
-            loggedUser.money += selectedRow.prix;
+            //dispatch(reduceMoney(-selectedRow.prix));
+           // loggedUser.money += selectedRow.prix;
             let url = `http://localhost:8082/store/sell?card_id=${selectedRow.id}`;
             fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 }
-            }).then(r => r.json()).then(r => alert(r));
+            }).then(r => r.text()).then(r => {
+                setIsActionDone(true);
+                })
         } catch (error) {
             console.error('Error:', error);
         }
@@ -127,6 +132,7 @@ function StoreComponent (data : string) {
                                 prix={selectedRow.prix}
                                 buyAction={BuyAction}
                                 sellAction={SellAction}
+                                isActionDone={isActionDone}
                             />
                         </div>
                     )}

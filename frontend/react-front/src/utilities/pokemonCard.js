@@ -1,6 +1,6 @@
 import {Button, Card, CardContent, CardMedia, Divider, Typography} from "@mui/material";
 
-const PokemonCard = ({ name, attack, defense, description, imageURL, prix ,isBuy, buyAction, sellAction}) => {
+const PokemonCard = ({ name, attack, defense, description, imageURL, prix ,isBuy, buyAction, sellAction, isActionDone}) => {
     return (
         <Card>
             <CardMedia component="img" height="140" image={imageURL} alt={name} />
@@ -22,10 +22,11 @@ const PokemonCard = ({ name, attack, defense, description, imageURL, prix ,isBuy
                 </Typography>
             </CardContent>
             <Divider />
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}>
-                <Button variant="contained" color="primary" onClick={() => (isBuy ? buyAction() : sellAction())}>
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '10px', flexDirection : "column" }}>
+                <Button variant="contained" disabled={isActionDone} color="primary" onClick={() => (isBuy ? buyAction() : sellAction())}>
                     {isBuy ? 'Buy' : 'Sell'}
                 </Button>
+                <h4 style={{display : isActionDone ? "flex" : "none"}}>{isActionDone ? isBuy ? 'Achat de la carte en cours...' : 'Vente de la carte en cours...' : ''}</h4>
             </div>
         </Card>
     );

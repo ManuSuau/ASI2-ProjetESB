@@ -14,4 +14,10 @@ export const reduceMoney = (amount) => ({
     payload: amount,
 });
 
-//add money action
+
+
+//remove user
+export const removeUser = () => ({
+    type: 'REMOVE_USER',
+    payload: null,
+});
