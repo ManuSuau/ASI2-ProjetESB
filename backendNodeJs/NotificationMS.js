@@ -35,14 +35,19 @@ stompit.connect(connectOptions, (error, client) => {
         console.error('Erreur:', error);
         return;
       }
-      console.log('jenvoie : ',body);
-      io.emit('myEvent2', body);
-    });
+      body = JSON.parse(body);
+      console.log(body)
+      if (body.finished) {
+        io.emit('transaction', body);
+      } else {
+        console.log("login")
+        io.emit('login', body);
+      }});
   });
 });
 
 io.on('connection', function(socket){
-  console.log('Un utilisateur s\'est connecté');
+  console.log('Un client s\'est connecté à la WebSocket');
 });
 
 server.listen(3333, function(){

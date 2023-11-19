@@ -55,7 +55,8 @@ public class StoreService {
     public void saveTransaction(TransactionDTO transactionDTO){
         Transaction transaction = mappeurDTO(transactionDTO);
         Transaction transac= storeRepository.save(transaction);
-        busStoreService.sendMsg("votre transaction numero "+transac.getId().toString()+" est terminée");
+        String jsonMsg = "{\"id\":" + transac.getId().toString() + ", \"finished\":true}";
+        busStoreService.sendMsg(jsonMsg);
     }
 
     public void saveUser(UserConnectedDTO user) throws IOException {

@@ -1,6 +1,6 @@
 //store
 import React, {Component, useEffect, useState} from 'react';
-import {Button, Card, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
+import {Alert, Button, Card, Snackbar, Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import HeaderBox from "../utilities/header";
 import PokemonCard from "../utilities/pokemonCard";
@@ -9,32 +9,15 @@ import {selectUser} from "../store/actions";
 import {io} from "socket.io-client";
 
 function StoreComponent (data : string) {
-
-
-    useEffect(() => {
-        const socket = io('http://localhost:3333');
-
-        socket.connect();
-
-
-        // Handle events within useEffect
-        socket.on('connect', () => {
-            console.log('Connected to the WebSocket');
-        });
-
-
-        socket.on('myEvent2', (data) => {
-            console.log(data);
-        });
-    }, []);
-
+    const socket = io('http://localhost:3333');
     const [cards, setCards] = React.useState([]);
     const [isBuy, setIsBuy] = React.useState(data.data === "buy");
     const [selectedRow, setSelectedRow] = useState(null);
     const [isActionDone, setIsActionDone] = useState(false);
     const dispatch = useDispatch();
-
+    const [openSnackBar, setOpenSnackBar] = React.useState(false);
     const loggedUser = useSelector(selectUser);
+    const navigate = useNavigate();
 
     const fetchData = async (action, ownerId) => {
         try {
@@ -53,7 +36,14 @@ function StoreComponent (data : string) {
     };
 
     useEffect(() => {
+        socket.connect();
+
+        // Handle events within useEffect
+        socket.on('connect', () => {
+            console.log('Connected to the WebSocket');
+        });
         fetchData(data.data,loggedUser.id).then(r => console.log(r));
+
     }, []);
 
     const handleRowClick = (row) => {
@@ -76,6 +66,15 @@ function StoreComponent (data : string) {
                 }
             }).then(r => r.text()).then(r => {
                 setIsActionDone(true);
+                socket.on('transaction', (data) => {
+                    console.log(data);
+                    if (data.finished) {
+                        setOpenSnackBar(true);
+                    }
+                    setTimeout(() => {
+                        navigate('/home');
+                    }, 3000);
+                });
             });
         } catch (error) {
             console.error('Error:', error);
@@ -94,14 +93,34 @@ function StoreComponent (data : string) {
             }).then(r => r.text()).then(r => {
                 setIsActionDone(true);
                 })
+            socket.on('transaction', (data) => {
+                console.log(data);
+                if (data.finished) {
+                    setOpenSnackBar(true);
+                }
+                setTimeout(() => {
+                    navigate('/home');
+                }, 3000);
+            });
         } catch (error) {
             console.error('Error:', error);
         }
     }
 
+    function handleClose() {
+        setOpenSnackBar(false);
+        navigator.navigate('/home');
+    }
+
     return (
         <div>
             <HeaderBox title={"Store"}/>
+            <Snackbar   anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                        open={openSnackBar} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                   Transaction completed with success
+                </Alert>
+            </Snackbar>
             <div style={{display : 'flex', flexDirection : 'row',}}>
                 <div className="table" style={{width : "60%" , margin: 10,  overflow: 'auto'}}>
                     <Table sx={{ minWidth: 600, }} size="small" aria-label="a dense table">

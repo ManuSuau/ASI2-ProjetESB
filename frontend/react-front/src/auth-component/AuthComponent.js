@@ -1,15 +1,18 @@
 //login form
 
-import React, {Component, useState} from 'react';
-import {Button, Card, FormGroup, Input} from "@mui/material";
+import React, {Component, useEffect, useState} from 'react';
+import {Alert, Button, Card, FormGroup, Input, Snackbar} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { setUser } from '../store/actions';
+import {io} from "socket.io-client";
 
 function AuthComponent() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const socket = io('http://localhost:3333');
+    const [openSnackBar, setOpenSnackBar] = useState(false);
+    let snackbarMessage = "User is being created";
     const navigateHome = () => {
         // Navigate to the specified route
         navigate('/home');
@@ -17,10 +20,17 @@ function AuthComponent() {
     const [isLogin, setIsLogin] = useState(true);
 
 
+    useEffect(() => {
+        socket.connect();
+
+        // Handle events within useEffect
+        socket.on('connect', () => {
+            console.log('Connected to the WebSocket');
+        });
+    }, [isLogin]);
     function refreshPage() {
         window.location.reload(false);
     }
-
     function doAction() {
         if (isLogin === true) {
             //login
@@ -41,18 +51,18 @@ function AuthComponent() {
                         const loggedUser = {
                             username: data.username,
                             id: data.id,
-                            money: data.money
+                            money: data.money,
+                            password: data.password
                         }
                         dispatch(setUser(loggedUser));
                         navigateHome();
                     }
-
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
         } else {
-            //register
+            setOpenSnackBar(true)
             fetch('http://localhost:8080/auths/register', {
                 method: 'POST',
                 headers: {
@@ -60,14 +70,17 @@ function AuthComponent() {
                 },
                 body: JSON.stringify({username : document.getElementsByName("username")[0].value, password : document.getElementsByName("password")[0].value}),
             })
-                .then(response => response.text()) // or response.json() if the response is in JSON format
+                .then(response => response.text())
                 .then(data => {
                     console.log('Success:', data);
-                    alert(data)
-                    // Delay for 2 seconds (2000 milliseconds) before navigating
-                    setTimeout(() => {
-                        refreshPage();
-                    }, 2000);
+
+                    socket.on('login', (data) => {
+                        snackbarMessage = "User created successfully";
+                        console.log(data);
+                        setTimeout(() => {
+                            refreshPage();
+                        }, 2000);
+                    });
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -77,8 +90,19 @@ function AuthComponent() {
 
 
 
+
+    function handleClose() {
+        setOpenSnackBar(false);
+    }
+
     return (
             <Card style={{width : "50%", margin : 'auto'}}>
+                <Snackbar   anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    open={openSnackBar} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                        {snackbarMessage}
+                    </Alert>
+                </Snackbar>
                 <FormGroup style={{ padding : 15, gap : 15}}>
                         <h2> {isLogin === true ? "Welcome" : "Create a user"}</h2>
                         <Input type="text" name="username" placeholder="username" />

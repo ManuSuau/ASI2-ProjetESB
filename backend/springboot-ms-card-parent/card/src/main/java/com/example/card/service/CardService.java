@@ -45,7 +45,6 @@ public class CardService {
 
     public void addCard(Card card) {
         cardRepository.save(card);
-        busService.sendMsg("Modification de votre liste de carte terminée");
     }
 
 
