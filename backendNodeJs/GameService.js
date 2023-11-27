@@ -70,6 +70,6 @@ io.on('connection', (socket) => {
     // Autres événements à gérer...
   });
   
-  http.listen(3000, () => {
+  server.listen(3000, () => {
     console.log('Serveur WebSocket en cours d\'exécution sur le port 3000');
   });

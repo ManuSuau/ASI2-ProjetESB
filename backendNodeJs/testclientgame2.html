@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WebSocket Test</title>
+</head>
+<body>
+  <h1>WebSocket Test</h1>
+
+  <input type="text" id="userId" placeholder="User ID"><br>
+  <input type="text" id="card1" placeholder="Card ID 1">
+  <input type="text" id="card2" placeholder="Card ID 2">
+  <input type="text" id="card3" placeholder="Card ID 3"><br>
+  <button onclick="startGame()">Start Game</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+  <script>
+    const socket = io('http://localhost:3000'); // Replace with your server address
+
+    function startGame() {
+      const userId = document.getElementById('userId').value;
+      const cardId1 = document.getElementById('card1').value;
+      const cardId2 = document.getElementById('card2').value;
+      const cardId3 = document.getElementById('card3').value;
+
+      // Envoi des données au serveur pour démarrer le jeu
+      socket.emit('startgame', { userId, cardId1, cardId2, cardId3 });
+    }
+
+    // Écoutez les événements émis par le serveur
+    socket.on('game_start', (data) => {
+      console.log('Game started:', data);
+      // Afficher les détails de la partie dans l'interface utilisateur
+      alert(`Game started!\nYour opponent: ${JSON.stringify(data.opponent)}\nYour details: ${JSON.stringify(data.myDetails)}`);
+    });
+
+    // Autres écouteurs d'événements à ajouter si nécessaire...
+
+  </script>
+</body>
+</html>
