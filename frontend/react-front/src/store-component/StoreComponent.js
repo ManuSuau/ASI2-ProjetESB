@@ -37,18 +37,15 @@ function StoreComponent (data : string) {
 
     useEffect(() => {
         socket.connect();
-
         // Handle events within useEffect
         socket.on('connect', () => {
             console.log('Connected to the WebSocket');
         });
         fetchData(data.data,loggedUser.id).then(r => console.log(r));
-
     }, []);
 
     const handleRowClick = (row) => {
         setSelectedRow(row);
-        // You can perform additional actions on row selection if needed
     };
     function BuyAction() {
         try {
