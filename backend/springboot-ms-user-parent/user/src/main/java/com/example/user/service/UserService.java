@@ -55,8 +55,20 @@ public class UserService {
         busUserService.sendMsg(jsonMsg);
     }
 
+    public void modifyMoney(Integer id, Integer money){
+        Optional<User> user = getUserById(Integer.valueOf(id));
+        if(user.isPresent()){
+            UserConnectedDTO userConnectedDTO = new UserConnectedDTO();
+            userConnectedDTO.setId(user.get().getId());
+            userConnectedDTO.setUsername(user.get().getUsername());
+            userConnectedDTO.setPassword(user.get().getPassword());
+            userConnectedDTO.setMoney(user.get().getMoney()+money);
+            PutUser(userConnectedDTO);
+        }
+    }
+
     @Transactional
-    public Optional<User> getCardById(Integer id)  {
+    public Optional<User> getUserById(Integer id)  {
         return userRepository.findById(id);
     }
 
