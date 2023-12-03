@@ -1,5 +1,4 @@
 const socket = io('http://localhost:3000');
-
 document.getElementById('startButton').addEventListener('click', startGame);
 
 function startGame() {
@@ -9,9 +8,9 @@ function startGame() {
   const cardId3 = document.getElementById('card3').value;
 
   const cards = [
-    { cardId: cardId1, attaque: 100, defense: 150 },
-    { cardId: cardId2, attaque: 100, defense: 150 },
-    { cardId: cardId3, attaque: 100, defense: 150 }
+    { cardId: cardId1, attaque: 100, defense: 50 },
+    { cardId: cardId2, attaque: 100, defense: 50 },
+    { cardId: cardId3, attaque: 100, defense: 50 }
   ];
 
   socket.emit('startgame', { userId, cards });
@@ -60,6 +59,10 @@ socket.on('game_start', (data) => {
   });
 
   socket.on('erreur_attaque', (data) => {
+    alert(data);
+  });
+
+  socket.on('end_game', (data) => {
     alert(data);
   });
 
