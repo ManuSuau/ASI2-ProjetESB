@@ -124,6 +124,6 @@ io.on('connection', (socket) => {
   
   });
   
-  server.listen(3000, () => {
-    console.log('Serveur WebSocket en cours d\'exécution sur le port 3000');
+  server.listen((3001), () => {
+    console.log('Serveur WebSocket en cours d\'exécution sur le port 3001');
   });

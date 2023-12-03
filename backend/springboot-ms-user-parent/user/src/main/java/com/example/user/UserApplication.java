@@ -43,9 +43,9 @@ public class UserApplication {
         userService.deleteAll();
         UserConnectedDTO user1 = new UserConnectedDTO("simon", "pws", 500);
         userService.addUser(user1);
-        UserConnectedDTO user2 = new UserConnectedDTO("manu", "pws", 500);
+        UserConnectedDTO user2 = new UserConnectedDTO("manu", "pws", 1000);
         userService.addUser(user2);
-        UserConnectedDTO user3 = new UserConnectedDTO("walid", "pws", 500);
+        UserConnectedDTO user3 = new UserConnectedDTO("walid", "pws", 1000);
         userService.addUser(user3);
         UserConnectedDTO user4 = new UserConnectedDTO("rayane", "pws", 500);
         userService.addUser(user4);

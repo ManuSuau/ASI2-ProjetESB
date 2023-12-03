@@ -39,19 +39,22 @@ function CardChoiceComponent() {
 
 
     function handleCardClick(id) {
-        if (selectedCards.length < 3) {
-            if (!selectedCards.includes(id)) {
-                setSelectedCards([...selectedCards, id]);
-            }
-            else {
-                //remove the card
-                setSelectedCards(selectedCards.filter(cardId => cardId !== id));
-            }
+        const isCardSelected = selectedCards.includes(id);
+
+        if (isCardSelected) {
+            // If the card is already selected, remove it from the selectedCards
+            setSelectedCards(selectedCards.filter(cardId => cardId !== id));
         } else {
-            setMessage("You have to choose 3 cards");
-            setOpenSnackBar(true);
+            // If the card is not selected, check if the total selected cards is less than 3
+            if (selectedCards.length < 3) {
+                setSelectedCards([...selectedCards, id]);
+            } else {
+                setMessage("You can only choose up to 3 cards.");
+                setOpenSnackBar(true);
+            }
         }
     }
+
 
     const isCardSelected = (id) => {
         return selectedCards.includes(id);
@@ -63,8 +66,8 @@ function CardChoiceComponent() {
 
     function playAction() {
         if (selectedCards.length === 3) {
-            // TODO : send the selected cards to the server
-            console.log(selectedCards);
+            navigate('/play', {state : {cards :
+                    cards.filter(card => selectedCards.includes(card.id))}});
         } else {
            setMessage("You must choose 3 cards to play");
             setOpenSnackBar(true);

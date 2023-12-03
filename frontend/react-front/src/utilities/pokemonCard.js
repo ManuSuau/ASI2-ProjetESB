@@ -1,8 +1,8 @@
 import {Button, Card, CardContent, CardMedia, Divider, Typography} from "@mui/material";
 
-const PokemonCard = ({ name, attack, defense, description, imageURL, prix ,isBuy, buyAction, sellAction, isActionDone, isCardChoice, isChoosen}) => {
+const PokemonCard = ({ name, attack, defense, description, imageURL, prix ,isBuy, buyAction, sellAction, isActionDone, isCardChoice, isChoosen, isGame, isChoosenForAttack}) => {
     return (
-        <Card style={isChoosen ? {backgroundColor :" lightblue"} : null }>
+        <Card style={isChoosen ? {backgroundColor :" lightblue"} : isChoosenForAttack ? {backgroundColor :" #ffc6c4"} : null }>
             <CardMedia component="img" height="140" image={imageURL} alt={name} />
             <CardContent>
                 <Typography variant="h5" component="div">
@@ -14,15 +14,15 @@ const PokemonCard = ({ name, attack, defense, description, imageURL, prix ,isBuy
                 <Typography variant="body2" color="text.secondary">
                     Defense: {defense}
                 </Typography>
-                {!isCardChoice &&<Typography variant="body2" color="text.secondary">
+                {!isCardChoice || isGame &&<Typography variant="body2" color="text.secondary">
                     Prix: {prix}
                 </Typography>}
-                <Typography variant="body2" color="text.secondary">
+                {!isGame && <Typography variant="body2" color="text.secondary">
                     Description: {description}
-                </Typography>
+                </Typography>}
             </CardContent>
             <Divider />
-            {isCardChoice ? <></> :
+            {isCardChoice || isGame ? <></> :
                 <div style={{ display: 'flex', justifyContent: 'center', padding: '10px', flexDirection : "column" }}>
                 <Button variant="contained" disabled={isActionDone} color="primary" onClick={() => (isBuy ? buyAction() : sellAction())}>
                     {isBuy ? 'Buy' : 'Sell'}
