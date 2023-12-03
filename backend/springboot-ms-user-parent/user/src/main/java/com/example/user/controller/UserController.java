@@ -31,12 +31,17 @@ public class UserController {
 
     @GetMapping("/{id}")
     public Optional<User> findById(@PathVariable("id") Integer id){
-        return userService.getCardById(id);
+        return userService.getUserById(id);
     }
 
     @PutMapping("/{id}")
     public void ModifyById(@RequestBody UserConnectedDTO user){
         userService.PutUser(user);
+    }
+
+    @PutMapping("/addMoney")
+    public void ModifiyMoney(@RequestParam("id") Integer id,@RequestParam("money") Integer money){
+       userService.modifyMoney(id,money);
     }
 
     @PostMapping("/login")

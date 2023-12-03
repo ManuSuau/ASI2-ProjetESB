@@ -94,6 +94,8 @@ io.on('connection', (socket) => {
                     io.to(user2.socketId).emit('end_game', userDataForPlayer2);
                     delete usersInRoom[user1.userId];
                     delete usersInRoom[user2.userId];
+                    modifyMoney(user1,100);
+                    modifyMoney(user2,-100);
                   }else{
                     gameRooms.push(NGR);
                     const userDataForPlayer1 = { opponent: user2, myDetails: user1 };
@@ -154,4 +156,23 @@ io.on('connection', (socket) => {
 
   function CalculEndGame(user){
     return user.cards.every(card => card.defense <= 0);
+  }
+
+   async function modifyMoney(user,money){
+    
+    const apiUrl = `http://localhost:8083/users/addMoney?id=${user.userId}&money=${money}`;
+    console.log(apiUrl);
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'PUT'
+      });
+  
+      if (!response.ok) {
+        throw new Error('Erreur lors de la requête');
+      }
+  
+      console.log('Mise à jour réussie');
+    } catch (error) {
+      console.error('Erreur :', error.message);
+    }
   }
