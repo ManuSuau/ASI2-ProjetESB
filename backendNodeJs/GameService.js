@@ -38,6 +38,17 @@ io.on('connection', (socket) => {
           const user2 = connectedUsers[connectedUserIds[randomUserIndex2]];
           user1.canAttack = true;
 
+          if (gameRooms.length > 0) {
+            for (const room of gameRooms) {
+              const user1InRoom = room.find(user => user.userId === user1.userId);
+              const user2InRoom = room.find(user => user.userId === user2.userId);
+              if (user1InRoom && user2InRoom) {
+                console.log('Game room already exists');
+                return;
+              }
+            }
+          }
+
           const gameRoom = [user1, user2];
 
           delete connectedUsers[user1.userId];

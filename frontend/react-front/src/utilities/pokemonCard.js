@@ -2,7 +2,7 @@ import {Button, Card, CardContent, CardMedia, Divider, Typography} from "@mui/ma
 
 const PokemonCard = ({ name, attack, defense, description, imageURL, prix ,isBuy, buyAction, sellAction, isActionDone, isCardChoice, isChoosen, isGame, isChoosenForAttack}) => {
     return (
-        <Card style={isChoosen ? {backgroundColor :" lightblue"} : isChoosenForAttack ? {backgroundColor :" #ffc6c4"} : null }>
+        <Card style={isChoosen ? {backgroundColor :" lightblue"} : isChoosenForAttack ? {backgroundColor :" #ffc6c4"} : defense <= 0 ? {backgroundColor :" #gray"} : null }>
             <CardMedia component="img" height="140" image={imageURL} alt={name} />
             <CardContent>
                 <Typography variant="h5" component="div">

@@ -14,12 +14,27 @@ function CardChoiceComponent() {
     const [selectedCards, setSelectedCards] = useState([]);
     const [openSnackBar, setOpenSnackBar] = useState(false);
     const [message, setMessage] = useState("");
+    const [allCards, setAllCards] = useState([]);
     const fetchData = async (ownerId) => {
         try {
             let url = `http://localhost:8081/cards/owner?owner_id=${ownerId}`;
             const response = await fetch(url);
             const data = await response.json();
             setCards(data);
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle the error as needed
+        }
+    };
+
+    const fetchAllData = async ( ) => {
+        try {
+            let url = `http://localhost:8081/cards`;
+
+            const response = await fetch(url);
+            const data = await response.json();
+            setAllCards(data);
+            console.log("all cards")
         } catch (error) {
             console.error('Error:', error);
             // Handle the error as needed
@@ -33,6 +48,8 @@ function CardChoiceComponent() {
             console.log('Connected to the WebSocket');
         });
         fetchData(user.id).then(r => console.log(r));
+        fetchAllData(user.id).then(r => console.log(r));
+
     }, []);
 
     // return a page with the user's cards using the CardComponent making it clickable and let them choose 3 to play with
@@ -64,12 +81,19 @@ function CardChoiceComponent() {
         setOpenSnackBar(false);
     }
 
-    function playAction() {
+    async function playAction() {
+
         if (selectedCards.length === 3) {
-            navigate('/play', {state : {cards :
-                    cards.filter(card => selectedCards.includes(card.id))}});
+            navigate('/play', {
+                state: {
+                    cards:
+                        cards.filter(card => selectedCards.includes(card.id)),
+                    allCards: allCards
+                }
+            });
+
         } else {
-           setMessage("You must choose 3 cards to play");
+            setMessage("You must choose 3 cards to play");
             setOpenSnackBar(true);
         }
     }

@@ -11,78 +11,83 @@ import PokemonCard from "../utilities/pokemonCard";
 function GameComponent() {
     const location = useLocation();
     const { state } = location;
-    const [gameData, setGameData] = useState(null);
     const [openSnackBar, setOpenSnackBar] = useState(false);
     const [message, setMessage] = useState('');
     const [gamePoints, setGamePoints] = useState(0);
     const [opponentGamePoints, setOpponentGamePoints] = useState(0);
-    const [canAttack, setCanAttack] = useState(gamePoints > 0);
-    const [allCards, setAllCards] = useState([]);
+    const [canAttack, setCanAttack] = useState(false);
     const [opponentCards, setOpponentCards] = useState([]);
     const [myAttackCard, setMyAttackCard] = useState(null);
     const [opponentAttackCard, setOpponentAttackCard] = useState(null);
+    const loggedUser  = useSelector(selectUser);
+    const [hasAttacked, setHasAttacked] = useState(false);
 
     // Access the 'cards' value from the state
-    const { cards } = state;
+    const { cards, allCards } = state;
+    const [userCards, setUserCards] = useState(cards);
+
     const socket = io('http://localhost:3001');
 
 
-    const fetchData = async ( ownerId) => {
-        try {
-            let url = `http://localhost:8081/cards`;
-
-            const response = await fetch(url);
-            const data = await response.json();
-            setAllCards(data);
-        } catch (error) {
-            console.error('Error:', error);
-            // Handle the error as needed
-        }
-    };
 
 
 
+    //start the connection with the server and send the cards of the player
     useEffect(() => {
         //retrieve all cards from the database
-        fetchData().then(r => console.log("cards fetched"));
+
 
         socket.connect();
         socket.emit('startgame', {
             userId: loggedUser.id,
-            cards: cards.map((card) => ({
+            cards: userCards.map((card) => ({
                 cardId: card.id,
-                attack: card.attack,
+                attaque: card.attack,
                 defense: card.defense,
             })),
         }, () => {
+            console.log('Game started')
         });
+    }, []);
 
-        socket.on('game_start', (data) => {
+    //retrieve the game data when the game starts
+    useEffect( () => {
+        socket.on('game_start', async (data) => {
             console.log(data);
             setMessage("We found an opponent, now you can choose one of your cards and one of your opponent's cards in order to make an attack");
             setOpenSnackBar(true);
             setGamePoints(data.myDetails.GamePoint)
             setOpponentGamePoints(data.opponent.GamePoint)
             let cardIds = data.opponent.cards.map((card) => card.cardid);
+            console.log("cardIds", cardIds, allCards.length)
             setOpponentCards(allCards.filter((card) => cardIds.includes(card.id)))
-            setGameData(data);
+            console.log("opponent cards", opponentCards);
+            setCanAttack(data.myDetails.canAttack);
         });
-    }, [opponentCards]);
 
-    const loggedUser  = useSelector(selectUser);
+        socket.on('resultat_attaque', (data) => {
+            //check if gamePoint changed
+            if (data.myDetails.GamePoint !== gamePoints) {
+                setHasAttacked(false);
+                setGamePoints(data.myDetails.GamePoint);
+            }else {
+                setGamePoints(data.myDetails.GamePoint);
+            }
+
+            setOpponentGamePoints(data.opponent.GamePoint);
+            setCanAttack(data.myDetails.canAttack);
+
+
+        });
+    }, []);
+
+
 
 
     //make a player choose a card of its own as well as a card of the opponent
     function handleCardClick(id) {
         if (canAttack) {
             setMyAttackCard(id);
-            socket.emit('attaque', {
-                userId: loggedUser.id,
-                opponentId: gameData.opponent.id,
-                myCardId: id,
-                opponentCardId: gameData.opponent.cards[0].cardid,
-            }, () => {
-            });
         }
     }
 
@@ -90,8 +95,38 @@ function GameComponent() {
         setOpenSnackBar(false);
     };
 
+    function handleOpponentCardClick(id) {
+        if (canAttack) {
+            setOpponentAttackCard(id);
+        }
+    }
+
+    function attackOpponent() {
+        if (myAttackCard && opponentAttackCard) {
+            console.log("attaque", myAttackCard, opponentAttackCard)
+            let userId = loggedUser.id;
+            let cardId = myAttackCard;
+            let opponentCardId = opponentAttackCard;
+            socket.emit('attaque', { userId, cardId, opponentCardId }, () => {
+                setHasAttacked(true);
+            });
+        }
+        else {
+            setMessage("You must choose a card of your own and a card of your opponent in order to make an attack");
+            setOpenSnackBar(true);
+        }
+    }
+
+    function endMyTurn() {
+        let userId = loggedUser.id;
+        socket.emit('endTurn', {
+            userId,
+        }, () => {
+        });
+    }
+
     return (
-        <div>
+        <div >
             <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                       open={openSnackBar} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
@@ -104,7 +139,7 @@ function GameComponent() {
                     {opponentCards ?
                         <div className="card-deck" style={{display : "flex",flexDirection : 'row', gap : 50, alignItems : "center",justifyContent : "center" }}>
                             {opponentCards.map((card) => (
-                                <div style={{  cursor: 'pointer', border : "medium" , borderColor : "blue", width : 200, }} onClick={() => {handleCardClick(card.id)}}>
+                                <div style={{  cursor: card.defense <= 0 ? null :  'pointer', border : "medium" , borderColor : "blue", width : 200, }} onClick={() => {card.defense <= 0 ? console.log("") : handleOpponentCardClick(card.id)}}>
                                     <PokemonCard key={card.id}
                                                  name={card.name}
                                                  imageURL={card.imageUrl}
@@ -121,10 +156,12 @@ function GameComponent() {
                 </div>
             </Card>
             <Divider>Your Game points : {gamePoints} | Opponent's Game Points : {opponentGamePoints} </Divider>
-            <Button variant="contained" color="primary">Attack</Button>
+            <Button variant="contained" color="primary" disabled={gamePoints == 0 || !canAttack}  onClick={()=> {attackOpponent()}}>Attack</Button>
+            <Button variant="contained" color="primary" disabled={!canAttack}  onClick={()=> {endMyTurn()}}>End turn</Button>
+
             <Card style={{ backgroundColor: "lightblue", }}>
                 <div className="card-deck" style={{display : "flex",flexDirection : 'row', gap : 50, alignItems : "center",justifyContent : "center" }}>
-                    {cards.map((card) => (
+                    {userCards.map((card) => (
                         <div style={{  cursor: 'pointer', border : "medium" , borderColor : "blue", width : 200, }} onClick={() => {handleCardClick(card.id)}}>
                             <PokemonCard key={card.id}
                                          name={card.name}
