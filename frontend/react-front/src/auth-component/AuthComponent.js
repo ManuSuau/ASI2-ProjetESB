@@ -19,10 +19,8 @@ function AuthComponent() {
     };
     const [isLogin, setIsLogin] = useState(true);
 
-
     useEffect(() => {
         socket.connect();
-
         // Handle events within useEffect
         socket.on('connect', () => {
             console.log('Connected to the WebSocket');

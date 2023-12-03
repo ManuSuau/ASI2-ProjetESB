@@ -27,9 +27,17 @@ function HomeComponent (props : any) {
         navigate('/sell');
     }
 
+    const handlePlay = () => {
+        navigate('/cardChoice');
+    }
+
     //get user data from local storage
 
-        return (
+    function handleChat() {
+        navigate('/chat');
+    }
+
+    return (
             <div>
                 <HeaderBox title={"Home"}/>
                 <div style={{ display: 'flex', flexDirection: 'row', height: '80vh' }}>
@@ -42,6 +50,15 @@ function HomeComponent (props : any) {
                         onClick={handleBuy}
                     >
                         Buy
+                    </Button>
+                    <Button
+                        style={{  flex: 1, margin :10}}
+                        size='large'
+                        variant="contained"
+                        color="primary"
+                        onClick={handleChat}
+                    >
+                        Chat
                     </Button>
                     <div  style={{  flex: 1,display: 'flex', flexDirection: 'column',margin :10}}>
                         <Button
@@ -60,6 +77,7 @@ function HomeComponent (props : any) {
                             variant="contained"
                             color="primary"
                             startIcon={<PlayArrowIcon />}
+                            onClick={handlePlay}
                         >
                             Play
                         </Button>

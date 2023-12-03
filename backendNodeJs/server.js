@@ -1,11 +1,8 @@
-const express = require('express');
-const http = require('http');
-const socketIO = require('socket.io');
+const app = require('express');
+const server = require('http').createServer(app);
+const io = require('socket.io')(server, {cors: {origin: "*"}});
 const request = require('request');
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIO(server);
 
 let users = [];
 
@@ -35,11 +32,6 @@ async function updateUsers() {
     });
 }
 
-app.use(express.static(__dirname));
-
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
 
 io.on('connection', (socket) => {
     console.log('Un utilisateur s\'est connecté');
@@ -71,7 +63,6 @@ io.on('connection', (socket) => {
         }
 
         messageHistory[historyKey].push(formattedMessage);
-
         io.to(`user-${receiverId}`).emit('message', { historyKey, message: formattedMessage });
     });
 
@@ -96,6 +87,6 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(3000, () => {
-    console.log('Le serveur est en écoute sur le port 3000');
+server.listen(4000, () => {
+    console.log('Le serveur est en écoute sur le port 4000');
 });
