@@ -14,8 +14,6 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 function HomeComponent (props : any) {
 
     const navigate = useNavigate();
-    const loggedUser = useSelector(selectUser);
-    const dispatch = useDispatch();
 
 
 

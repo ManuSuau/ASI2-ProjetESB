@@ -4,8 +4,28 @@
 
 La branche la plus à jour est la branche Main.
 
-il faut lancer ActiveMQ, le MS notification (backendNodeJS/NotificationMS.js), le MS plateau de jeu (backendNodeJS/GameService.js), le Ms du chat (BackendNodeJS/Server.js), le front (frontend/react-front), et les 4 MS avec Spring.
+ActiveMQ :
 
+Lancez le serveur ActiveMQ. Assurez-vous que le serveur est opérationnel.
+MS Notification (backendNodeJS/NotificationMS.js) :
+Accédez au répertoire backendNodeJS.
+Exécutez le fichier NotificationMS.js à l'aide de Node.js.
+
+MS Plateau de jeu (backendNodeJS/GameService.js) :
+Accédez au répertoire backendNodeJS.
+Exécutez le fichier GameService.js à l'aide de Node.js.
+
+MS du chat (BackendNodeJS/Server.js) :
+Accédez au répertoire BackendNodeJS.
+Exécutez le fichier Server.js à l'aide de Node.js.
+
+Frontend (frontend/react-front) :
+Accédez au répertoire frontend/react-front.
+Lancez l'application frontend. Cela dépend du framework utilisé avec npm start
+Si vous voulez utiliser le jeu lancez deux instances du front (en precisant 2 ports differents avec "--port") et connectez vous avec deux comptes differents.
+
+Les 4 MS avec Spring :
+Exécutez chaque service à l'aide de la commande spécifique pour Spring Boot
 FAIT :
 
 L'activité 1 est réalisé.

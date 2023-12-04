@@ -13,10 +13,7 @@ function AuthComponent() {
     const socket = io('http://localhost:3333');
     const [openSnackBar, setOpenSnackBar] = useState(false);
     let snackbarMessage = "User is being created";
-    const navigateHome = () => {
-        // Navigate to the specified route
-        navigate('/home');
-    };
+
     const [isLogin, setIsLogin] = useState(true);
 
     useEffect(() => {
@@ -32,7 +29,7 @@ function AuthComponent() {
     function doAction() {
         if (isLogin === true) {
             //login
-            fetch('http://localhost:8080/auths/login', {
+             fetch('http://localhost:8080/auths/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,7 +50,9 @@ function AuthComponent() {
                             password: data.password
                         }
                         dispatch(setUser(loggedUser));
-                        navigateHome();
+                        socket.disconnect()
+                        navigate('/home');
+
                     }
                 })
                 .catch((error) => {

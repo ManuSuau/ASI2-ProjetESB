@@ -5,12 +5,14 @@ import {Alert, Button, Card, Divider, Snackbar} from "@mui/material";
 import {useSelector} from "react-redux";
 import {selectUser} from "../store/actions";
 import {io} from "socket.io-client";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import PokemonCard from "../utilities/pokemonCard";
 
 function GameComponent() {
     const location = useLocation();
     const { state } = location;
+    const navigate = useNavigate();
+
     const [openSnackBar, setOpenSnackBar] = useState(false);
     const [message, setMessage] = useState('');
     const [gamePoints, setGamePoints] = useState(0);
@@ -103,13 +105,21 @@ function GameComponent() {
             console.log("resultat_attaque", data);
             //check if gamePoint changed
             if (data.looser || data.winner) {
-                if (data.looser === loggedUser.id) {
+                console.log("looser", data.looser, loggedUser.id)
+                if (data.looser.userId === loggedUser.id) {
                     setMessage("You lost the game. Your opponent takes 100$ from you.");
                     setOpenSnackBar(true);
+                    setOpenSnackBar(true);
+                    setTimeout(() => {
+                        navigate('/home');
+                    }, 5000);
                 }
-                else if (data.winner === loggedUser.id){
+                else if (data.winner.userId === loggedUser.id){
                     setMessage("You won the game, you take 100$ from your opponent.");
                     setOpenSnackBar(true);
+                    setTimeout(() => {
+                        navigate('/home');
+                    }, 5000);
                 }
             }
             else {
