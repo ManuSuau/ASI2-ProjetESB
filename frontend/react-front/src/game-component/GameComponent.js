@@ -21,14 +21,42 @@ function GameComponent() {
     const [opponentAttackCard, setOpponentAttackCard] = useState(null);
     const loggedUser  = useSelector(selectUser);
     const [hasAttacked, setHasAttacked] = useState(false);
+    const [hasGameStarted, setHasGameStarted] = useState(false);
 
     // Access the 'cards' value from the state
     const { cards, allCards } = state;
     const [userCards, setUserCards] = useState(cards);
 
-    const socket = io('http://localhost:3001');
+    const socket = io('http://localhost:9000');
 
+    function updateCards(cards) {
+        console.log("update cards", cards)
+        let newCards = userCards.map((card) => {
+            console.log("card", card)
+            let newCard = cards.find((c) => c.cardid === card.id);
+            if (newCard) {
+                card.defense = newCard.defense;
+            }
+            return card;
+        });
+        setUserCards(newCards);
+    }
 
+    function updateOpponentCards(cards) {
+        console.log("update opponent cards", cards)
+        let cardIds = cards.map((card) => card.cardid);
+        let newCards = allCards.filter((card) => cardIds.includes(card.id))
+        newCards = newCards.map((card) => {
+            let newCard = cards.find((c) => c.cardid === card.id);
+            if (newCard) {
+                card.defense = newCard.defense;
+            }
+            return card;
+        });
+
+        console.log(newCards)
+        setOpponentCards(newCards);
+    }
 
 
 
@@ -38,6 +66,7 @@ function GameComponent() {
 
 
         socket.connect();
+        console.log("CONNEXION")
         socket.emit('startgame', {
             userId: loggedUser.id,
             cards: userCards.map((card) => ({
@@ -46,6 +75,7 @@ function GameComponent() {
                 defense: card.defense,
             })),
         }, () => {
+            setHasGameStarted(true)
             console.log('Game started')
         });
     }, []);
@@ -65,21 +95,39 @@ function GameComponent() {
             setCanAttack(data.myDetails.canAttack);
         });
 
-        socket.on('resultat_attaque', (data) => {
-            //check if gamePoint changed
-            if (data.myDetails.GamePoint !== gamePoints) {
-                setHasAttacked(false);
-                setGamePoints(data.myDetails.GamePoint);
-            }else {
-                setGamePoints(data.myDetails.GamePoint);
-            }
 
-            setOpponentGamePoints(data.opponent.GamePoint);
-            setCanAttack(data.myDetails.canAttack);
+    }, [ hasGameStarted]);
+
+    useEffect( () => {
+        socket.on('resultat_attaque', (data) => {
+            console.log("resultat_attaque", data);
+            //check if gamePoint changed
+            if (data.looser || data.winner) {
+                if (data.looser === loggedUser.id) {
+                    setMessage("You lost the game. Your opponent takes 100$ from you.");
+                    setOpenSnackBar(true);
+                }
+                else if (data.winner === loggedUser.id){
+                    setMessage("You won the game, you take 100$ from your opponent.");
+                    setOpenSnackBar(true);
+                }
+            }
+            else {
+                if (data.myDetails.GamePoint !== gamePoints) {
+                    setHasAttacked(false);
+                    setGamePoints(data.myDetails.GamePoint);
+                }else {
+                    setGamePoints(data.myDetails.GamePoint);
+                }
+                setOpponentGamePoints(data.opponent.GamePoint);
+                setCanAttack(data.myDetails.canAttack);
+                updateCards(data.myDetails.cards);
+                updateOpponentCards(data.opponent.cards);
+            }
 
 
         });
-    }, []);
+        }, []);
 
 
 
