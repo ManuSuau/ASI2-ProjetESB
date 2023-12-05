@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
     if(message.receiverId==-1){
         const senderId = message.id;
         const timestamp = new Date().toLocaleTimeString();
-        const formattedMessage = `${timestamp} - ${connectedUsers[message.id].username} à tous : ${message.text}`;
+        const formattedMessage = `à tous : ${message.text}`;
         const username = connectedUsers[message.id].username;
 
         Object.keys(connectedUsers).forEach(userId => {
