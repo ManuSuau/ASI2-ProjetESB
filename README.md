@@ -26,11 +26,13 @@ Si vous voulez utiliser le jeu lancez deux instances du front (en precisant 2 po
 
 Les 4 MS avec Spring :
 Exécutez chaque service à l'aide de la commande spécifique pour Spring Boot
+
+
 FAIT :
 
 L'activité 1 est réalisé.
-Chat 70% (on a pas reussi à l'integrer dans avec le front React)
-plateau de jeux (duel entre 2 utilisateurs) 80% (problème d'affichage des valeurs des cartes apres avoir subis des attaques)
+Chat 80% (on a pas implémenter d'historique) /!\ lorsque plusieurs users sont sur la page du chat, il faudra surement refresh la page pour que la liste des users connectées se modifie 
+plateau de jeux (duel entre 2 utilisateurs)
 
 PAS FAIT :
 
@@ -40,12 +42,11 @@ proxy
 MS springBoot logger
 Activité 3
 
-Pour le chat et le plateau de jeux, on les a developpé avec des fronts independant du React, et on a rencontré enormement de problèmes lors de l'integration au React.
+Il y a 2 videos :
+l'une de toutes les applications ensemble (buy/sell et jeux).
+l'une du fonctionnement du chat 
 
-Il y a 3 videos :
-l'une de toutes les applications ensemble (buy/sell et une partie du jeu de combat).
-l'une du fonctionnement du nodeJs du jeux avec un front à part.
-l'une du fonctionnement du chat avec un front à part.
+On a deux videos mais tout fonctionne sur la même application
 
 ## Informations 
 
